@@ -4,7 +4,6 @@ import 'reason.dart';
 
 class ProviderEvaluation<T> implements BaseEvaluation<T> {
   final T _value;
-  // TODO: make optional params
   final String _variant;
   final Reason _reason;
   final ErrorCode? _errorCode;
@@ -13,10 +12,11 @@ class ProviderEvaluation<T> implements BaseEvaluation<T> {
   ProviderEvaluation(
     this._value,
     this._variant,
-    this._reason,
-    this._errorCode,
-    this._errorMessage,
-  );
+    this._reason, {
+    ErrorCode? errorCode,
+    String? errorMessage,
+  })  : _errorCode = errorCode,
+        _errorMessage = errorMessage;
 
   @override
   ErrorCode? getErrorCode() => _errorCode;

@@ -1,8 +1,7 @@
 import 'dart:developer';
 
-import 'package:openfeature_dart/src/error_code.dart';
-
 import 'client.dart';
+import 'error_code.dart';
 import 'evaluation_context.dart';
 import 'feature_provider.dart';
 import 'flag_evaluation_details.dart';
@@ -132,7 +131,13 @@ class OpenFeatureClient implements Client {
           type, hookCtx, e, mergedHooks, theOptions.hookHints);
 
       details = FlagEvaluationDetails<T>(
-          key, defaultValue, '', Reason.error, ErrorCode.general, '');
+        key,
+        defaultValue,
+        '',
+        Reason.error,
+        errorCode: ErrorCode.general,
+        errorMessage: '',
+      );
     } finally {
       _hookSupport.afterAllHooks(
           type, hookCtx, mergedHooks, theOptions.hookHints);

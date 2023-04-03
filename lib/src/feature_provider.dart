@@ -9,7 +9,6 @@ abstract class FeatureProvider {
 
   List<Hook> getProviderHooks() => [];
 
-  // TODO: EvaluationContext not optional?
   ProviderEvaluation<bool> getBooleanEvaluation(
     String key, {
     bool defaultValue,

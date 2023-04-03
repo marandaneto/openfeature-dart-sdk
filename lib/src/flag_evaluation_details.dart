@@ -16,10 +16,11 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
     this._flagKey,
     this._value,
     this._variant,
-    this._reason,
-    this._errorCode,
-    this._errorMessage,
-  );
+    this._reason, {
+    ErrorCode? errorCode,
+    String? errorMessage,
+  })  : _errorCode = errorCode,
+        _errorMessage = errorMessage;
 
   @override
   ErrorCode? getErrorCode() => _errorCode;
@@ -40,11 +41,8 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
     ProviderEvaluation<T> providerEval,
     String flagKey,
   ) =>
-      FlagEvaluationDetails<T>(
-          flagKey,
-          providerEval.getValue(),
-          providerEval.getVariant(),
-          providerEval.getReason(),
-          providerEval.getErrorCode(),
-          providerEval.getErrorMessage());
+      FlagEvaluationDetails<T>(flagKey, providerEval.getValue(),
+          providerEval.getVariant(), providerEval.getReason(),
+          errorCode: providerEval.getErrorCode(),
+          errorMessage: providerEval.getErrorMessage());
 }

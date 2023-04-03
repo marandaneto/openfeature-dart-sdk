@@ -18,8 +18,6 @@ class NoOpProvider extends FeatureProvider {
         defaultValue,
         _default,
         Reason.defaultReason,
-        null,
-        null,
       );
 }
 
