@@ -18,14 +18,19 @@ import 'provider_evaluation.dart';
 import 'reason.dart';
 
 class OpenFeatureClient implements Client {
-  final OpenFeatureAPI _openfeatureApi;
-  final String _name;
-  final String _version;
+  final OpenFeatureAPI _openFeatureApi;
+  final String? _name;
+  final String? _version;
   final List<Hook> _clientHooks = [];
   EvaluationContext? _evaluationContext;
   final HookSupport _hookSupport = HookSupport();
 
-  OpenFeatureClient(this._openfeatureApi, this._name, this._version);
+  OpenFeatureClient(
+    this._openFeatureApi, {
+    String? name,
+    String? version,
+  })  : _name = name,
+        _version = version;
 
   @override
   void addHook(Hook hook) => _clientHooks.add(hook);
@@ -52,7 +57,7 @@ class OpenFeatureClient implements Client {
   List<Hook> getHooks() => _clientHooks;
 
   @override
-  Metadata getMetadata() => _Metadata(_name);
+  Metadata getMetadata() => _Metadata(name: _name);
 
   @override
   void setEvaluationContext(EvaluationContext ctx) => _evaluationContext = ctx;
@@ -82,7 +87,7 @@ class OpenFeatureClient implements Client {
     final context = ctx ?? ImmutableContext.empty();
     final theOptions = options ?? FlagEvaluationOptions.empty();
     FlagEvaluationDetails<T>? details;
-    final provider = _openfeatureApi.getProvider() ?? NoOpProvider();
+    final provider = _openFeatureApi.provider ?? NoOpProvider();
     final hookCtx = HookContext.from<T>(
       key,
       type,
@@ -95,12 +100,12 @@ class OpenFeatureClient implements Client {
       ...provider.getProviderHooks(),
       ...theOptions.hooks,
       ..._clientHooks,
-      ..._openfeatureApi.hooks,
+      ..._openFeatureApi.hooks,
     ];
 
     try {
       final apiContext =
-          _openfeatureApi.getEvaluationContext() ?? ImmutableContext.empty();
+          _openFeatureApi.getEvaluationContext() ?? ImmutableContext.empty();
 
       final clientContext = getEvaluationContext() ?? ImmutableContext.empty();
 
@@ -166,10 +171,10 @@ class OpenFeatureClient implements Client {
 }
 
 class _Metadata implements Metadata {
-  final String _name;
+  final String? _name;
 
-  _Metadata(this._name);
+  _Metadata({String? name}) : _name = name;
 
   @override
-  String getName() => _name;
+  String? getName() => _name;
 }

@@ -93,8 +93,9 @@ class HookSupport {
     final result = callBeforeHooks(flagValueType, hookCtx, hooks, hints);
 
     // TODO: double check this
-    final reduce =
-        result.reduce((accumulated, current) => accumulated.merge(current));
+    final reduce = result.isNotEmpty
+        ? result.reduce((accumulated, current) => accumulated.merge(current))
+        : null;
     return hookCtx.ctx.merge(reduce);
   }
 

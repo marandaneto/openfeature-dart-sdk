@@ -26,14 +26,16 @@ class ImmutableContext extends EvaluationContext {
   String getTargetingKey() => _targetingKey;
 
   @override
-  EvaluationContext merge(EvaluationContext overridingContext) {
+  EvaluationContext merge(EvaluationContext? overridingContext) {
+    final newContext = overridingContext ??
+        ImmutableContext.from(getTargetingKey(), asValueMap());
     var newTargetingKey = '';
     final targetKey = getTargetingKey();
     if (!(targetKey.trim() == '')) {
       newTargetingKey = targetKey;
     }
 
-    final overridingTargetKey = overridingContext.getTargetingKey();
+    final overridingTargetKey = newContext.getTargetingKey();
     if (!(overridingTargetKey.trim() == '')) {
       newTargetingKey = overridingTargetKey;
     }
@@ -41,7 +43,7 @@ class ImmutableContext extends EvaluationContext {
     final merged = mergeStructures(
       (attributes) => ImmutableStructure(attributes),
       asValueMap(),
-      overridingContext.asValueMap(),
+      newContext.asValueMap(),
     );
 
     return ImmutableContext.from(newTargetingKey, merged);

@@ -4,5 +4,5 @@ import 'structure.dart';
 abstract class EvaluationContext extends Structure {
   String getTargetingKey();
 
-  EvaluationContext merge(EvaluationContext overridingContext);
+  EvaluationContext merge(EvaluationContext? overridingContext);
 }

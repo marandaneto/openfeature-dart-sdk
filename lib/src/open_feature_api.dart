@@ -1,14 +1,16 @@
+import 'client.dart';
 import 'evaluation_context.dart';
 import 'feature_provider.dart';
 import 'hook.dart';
 import 'metadata.dart';
+import 'open_feature_client.dart';
 
 /// A global singleton which holds base configuration for the OpenFeature library.
 /// Configuration here will be shared across all [Client].
 class OpenFeatureAPI {
   final List<Hook> _apiHooks = [];
 
-  FeatureProvider? _provider;
+  FeatureProvider? provider;
 
   EvaluationContext? _evaluationContext;
 
@@ -18,11 +20,15 @@ class OpenFeatureAPI {
 
   factory OpenFeatureAPI() => _instance;
 
-  Metadata? getProviderMetadata() => _provider?.getMetadata();
-
-  FeatureProvider? getProvider() => _provider;
+  Metadata? getProviderMetadata() => provider?.getMetadata();
 
   List<Hook> get hooks => List.unmodifiable(_apiHooks);
 
   EvaluationContext? getEvaluationContext() => _evaluationContext;
+
+  Client getClient({
+    String? name,
+    String? version,
+  }) =>
+      OpenFeatureClient(this, name: name, version: version);
 }

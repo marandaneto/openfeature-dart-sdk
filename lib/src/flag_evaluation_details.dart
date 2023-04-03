@@ -41,8 +41,12 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
     ProviderEvaluation<T> providerEval,
     String flagKey,
   ) =>
-      FlagEvaluationDetails<T>(flagKey, providerEval.getValue(),
-          providerEval.getVariant(), providerEval.getReason(),
-          errorCode: providerEval.getErrorCode(),
-          errorMessage: providerEval.getErrorMessage());
+      FlagEvaluationDetails<T>(
+        flagKey,
+        providerEval.getValue(),
+        providerEval.getVariant(),
+        providerEval.getReason(),
+        errorCode: providerEval.getErrorCode(),
+        errorMessage: providerEval.getErrorMessage(),
+      );
 }
