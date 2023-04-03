@@ -1,5 +1,4 @@
 import 'package:openfeature_dart/openfeature.dart';
-import 'package:openfeature_dart/src/immutable_structure.dart';
 import 'package:test/test.dart';
 
 void main() {
