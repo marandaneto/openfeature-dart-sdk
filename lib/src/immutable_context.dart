@@ -20,6 +20,9 @@ class ImmutableContext extends EvaluationContext {
   ImmutableContext.fromAttributes(Map<String, Value> attributes)
       : this('', ImmutableStructure.fromAttributes(attributes));
 
+  ImmutableContext.fromTargetingKey(String targetingKey)
+      : this(targetingKey, ImmutableStructure.empty());
+
   ImmutableContext.empty() : this('', ImmutableStructure.empty());
 
   @override
@@ -48,4 +51,16 @@ class ImmutableContext extends EvaluationContext {
 
     return ImmutableContext.from(newTargetingKey, merged);
   }
+
+  @override
+  Map<String, Object> asObjectMap() => _structure.asObjectMap();
+
+  @override
+  Map<String, Value> asValueMap() => _structure.asValueMap();
+
+  @override
+  Value? getValue(String key) => _structure.getValue(key);
+
+  @override
+  Set<String> keySet() => _structure.keySet();
 }

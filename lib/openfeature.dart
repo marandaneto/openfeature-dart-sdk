@@ -9,3 +9,4 @@ export 'src/open_feature_api.dart';
 export 'src/immutable_structure.dart';
 export 'src/no_op_provider.dart';
 export 'src/provider_evaluation.dart';
+export 'src/immutable_context.dart';

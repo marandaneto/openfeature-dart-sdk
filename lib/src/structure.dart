@@ -7,13 +7,13 @@ typedef StructureMergeFunction = Structure Function(
 
 /// [Structure] represents a potentially nested object type which is used to represent structured data.
 abstract class Structure {
-  Set<String> keySet() => {};
+  Set<String> keySet();
 
-  Value? getValue(String key) => null;
+  Value? getValue(String key);
 
-  Map<String, Value> asValueMap() => {};
+  Map<String, Value> asValueMap();
 
-  Map<String, Object> asObjectMap() => {};
+  Map<String, Object> asObjectMap();
 
   // TODO: throw instead of returning null
   Object? convertValue(Value value) {
@@ -77,6 +77,6 @@ abstract class Structure {
       }
     }
 
-    return {};
+    return merged;
   }
 }

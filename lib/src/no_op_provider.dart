@@ -6,7 +6,7 @@ import 'reason.dart';
 
 /// A [FeatureProvider] that simply returns the default values passed to it.
 class NoOpProvider extends FeatureProvider {
-  static const String _default = "Passed in default";
+  static const String _defaultVariant = "Passed in default";
 
   @override
   Metadata getMetadata() => _Metadata();
@@ -16,7 +16,7 @@ class NoOpProvider extends FeatureProvider {
           {bool defaultValue = false, EvaluationContext? ctx}) =>
       ProviderEvaluation<bool>(
         defaultValue,
-        _default,
+        _defaultVariant,
         Reason.defaultReason,
       );
 }
