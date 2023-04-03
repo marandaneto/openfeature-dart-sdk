@@ -9,9 +9,13 @@ import 'value.dart';
 class ImmutableStructure extends Structure {
   final Map<String, Value> _attributes;
 
-  ImmutableStructure(Map<String, Value> attributes)
-      : _attributes =
-            attributes.map((key, value) => MapEntry(key, value.clone()));
+  ImmutableStructure._(Map<String, Value> attributes)
+      : _attributes = attributes;
+
+  ImmutableStructure.fromAttributes(Map<String, Value> attributes)
+      : this._(attributes.map((key, value) => MapEntry(key, value.clone())));
+
+  ImmutableStructure.empty() : this._({});
 
   @override
   Map<String, Object> asObjectMap() => _attributes

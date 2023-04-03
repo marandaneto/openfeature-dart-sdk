@@ -15,12 +15,12 @@ class ImmutableContext extends EvaluationContext {
   ImmutableContext(this._targetingKey, this._structure);
 
   ImmutableContext.from(String targetingKey, Map<String, Value> attributes)
-      : this(targetingKey, ImmutableStructure(attributes));
+      : this(targetingKey, ImmutableStructure.fromAttributes(attributes));
 
   ImmutableContext.fromAttributes(Map<String, Value> attributes)
-      : this('', ImmutableStructure(attributes));
+      : this('', ImmutableStructure.fromAttributes(attributes));
 
-  ImmutableContext.empty() : this('', ImmutableStructure({}));
+  ImmutableContext.empty() : this('', ImmutableStructure.empty());
 
   @override
   String getTargetingKey() => _targetingKey;
@@ -41,7 +41,7 @@ class ImmutableContext extends EvaluationContext {
     }
 
     final merged = mergeStructures(
-      (attributes) => ImmutableStructure(attributes),
+      (attributes) => ImmutableStructure.fromAttributes(attributes),
       asValueMap(),
       newContext.asValueMap(),
     );

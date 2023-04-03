@@ -5,11 +5,11 @@ import 'structure.dart';
 /// Providers may deal in JSON, protobuf, XML or some other data-interchange format.
 /// This intermediate representation provides a good medium of exchange.
 class Value {
-  final Object _innerObject;
+  final Object? _innerObject;
 
-  // TODO: throw InstantiationException equivalent if invalid type
+  Value._(this._innerObject);
 
-  Value(this._innerObject);
+  Value.empty() : _innerObject = null;
 
   Value.fromValue(Value value) : _innerObject = value._innerObject;
 
@@ -25,6 +25,17 @@ class Value {
 
   Value.fromValueList(List<Value> value) : _innerObject = value;
 
+  Value.fromObject(Object? value) : _innerObject = value {
+    if (!isBoolean &&
+        !isString &&
+        !isNumber &&
+        !isStructure &&
+        !isValueList &&
+        !isNull) {
+      throw ArgumentError('Invalid value type: $value');
+    }
+  }
+
   // Add Instant?
 
   bool get isBoolean => _innerObject is bool;
@@ -37,7 +48,7 @@ class Value {
 
   bool get isValueList => _innerObject is List<Value>;
 
-  // copyWith(Object object) => Value(object);
+  bool get isNull => _innerObject == null;
 
   bool? asBoolean() {
     if (isBoolean) {
@@ -81,21 +92,21 @@ class Value {
     return null;
   }
 
-  Object asObject() => _innerObject;
+  Object? asObject() => _innerObject;
 
   Value clone() {
     if (isValueList) {
-      final copy = asValueList()!.map((e) => Value(e)).toList();
+      final copy = asValueList()!.map((e) => Value._(e)).toList();
       return Value.fromValueList(copy);
     }
 
     if (isStructure) {
-      final copy = asStructure()
-          !.asValueMap()
-          .map((key, value) => MapEntry(key, Value(value.clone())));
-      return Value.fromStructure(ImmutableStructure(copy));
+      final copy = asStructure()!
+          .asValueMap()
+          .map((key, value) => MapEntry(key, Value._(value.clone())));
+      return Value.fromStructure(ImmutableStructure.fromAttributes(copy));
     }
 
-    return Value(asObject());
+    return Value._(asObject());
   }
 }
