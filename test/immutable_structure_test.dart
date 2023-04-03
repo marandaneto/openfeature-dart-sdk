@@ -28,8 +28,8 @@ void main() {
     };
     final structure = ImmutableStructure.fromAttributes(map);
     final values = structure.getValue(key)!.asValueList()!;
-    values.add(Value.fromObject('value2'));
 
+    values.add(Value.fromObject('value2'));
     list.add(Value.fromObject('value3'));
 
     expect(structure.getValue(key)?.asValueList()?.length, 1);
