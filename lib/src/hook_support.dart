@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'evaluation_context.dart';
 import 'flag_evaluation_details.dart';
 import 'flag_value_type.dart';
 import 'hook.dart';
@@ -83,5 +84,32 @@ class HookSupport {
     }
   }
 
-  // TODO: missing beforeHooks, callBeforeHooks
+  EvaluationContext beforeHooks(
+    FlagValueType flagValueType,
+    HookContext hookCtx,
+    List<Hook> hooks,
+    Map<String, Object> hints,
+  ) {
+    final result = callBeforeHooks(flagValueType, hookCtx, hooks, hints);
+
+    // TODO: double check this
+    final reduce =
+        result.reduce((accumulated, current) => accumulated.merge(current));
+    return hookCtx.ctx.merge(reduce);
+  }
+
+  List<EvaluationContext> callBeforeHooks(
+    FlagValueType flagValueType,
+    HookContext hookCtx,
+    List<Hook> hooks,
+    Map<String, Object> hints,
+  ) {
+    // These traverse backwards from normal.
+    final reversedHooks = hooks.reversed.toList();
+    return reversedHooks
+        .where((element) => element.supportsFlagValueType(flagValueType))
+        .map((hook) => hook.before(hookCtx, hints))
+        .whereType<EvaluationContext>()
+        .toList();
+  }
 }

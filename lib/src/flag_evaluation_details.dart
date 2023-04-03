@@ -12,7 +12,7 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
   final ErrorCode? _errorCode;
   final String? _errorMessage;
 
-  FlagEvaluationDetails._(
+  FlagEvaluationDetails(
     this._flagKey,
     this._value,
     this._variant,
@@ -36,14 +36,15 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
   @override
   String getVariant() => _variant;
 
-  FlagEvaluationDetails.from(
+  static FlagEvaluationDetails<T> from<T>(
     ProviderEvaluation<T> providerEval,
     String flagKey,
-  ) : this._(
-            flagKey,
-            providerEval.getValue(),
-            providerEval.getVariant(),
-            providerEval.getReason(),
-            providerEval.getErrorCode(),
-            providerEval.getErrorMessage());
+  ) =>
+      FlagEvaluationDetails<T>(
+          flagKey,
+          providerEval.getValue(),
+          providerEval.getVariant(),
+          providerEval.getReason(),
+          providerEval.getErrorCode(),
+          providerEval.getErrorMessage());
 }

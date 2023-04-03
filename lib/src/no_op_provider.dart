@@ -13,15 +13,14 @@ class NoOpProvider extends FeatureProvider {
 
   @override
   ProviderEvaluation<bool> getBooleanEvaluation(String key,
-      {bool defaultValue = false, EvaluationContext? ctx}) {
-    return ProviderEvaluation(
-      defaultValue,
-      _default,
-      Reason.defaultReason,
-      null,
-      null,
-    );
-  }
+          {bool defaultValue = false, EvaluationContext? ctx}) =>
+      ProviderEvaluation<bool>(
+        defaultValue,
+        _default,
+        Reason.defaultReason,
+        null,
+        null,
+      );
 }
 
 class _Metadata implements Metadata {

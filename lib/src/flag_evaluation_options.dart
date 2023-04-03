@@ -7,6 +7,8 @@ class FlagEvaluationOptions {
 
   FlagEvaluationOptions._(this._hooks);
 
+  FlagEvaluationOptions.empty() : this._([]);
+
   FlagEvaluationOptions.from(List<Hook> hooks) : this._(hooks);
 
   Map<String, Object> get hookHints => Map.unmodifiable(_hookHints);

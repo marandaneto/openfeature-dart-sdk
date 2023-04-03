@@ -16,9 +16,7 @@ class OpenFeatureAPI {
 
   static final OpenFeatureAPI _instance = OpenFeatureAPI._();
 
-  factory OpenFeatureAPI() {
-    return _instance;
-  }
+  factory OpenFeatureAPI() => _instance;
 
   Metadata? getProviderMetadata() => _provider?.getMetadata();
 

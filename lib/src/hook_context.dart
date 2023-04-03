@@ -7,7 +7,7 @@ class HookContext<T> {
   final String _flagKey;
   final FlagValueType _type;
   final T _defaultValue;
-  final EvaluationContext _ctx;
+  final EvaluationContext ctx;
   final Metadata _clientMetadata;
   final Metadata _providerMetadata;
 
@@ -15,24 +15,25 @@ class HookContext<T> {
     this._flagKey,
     this._type,
     this._defaultValue,
-    this._ctx,
+    this.ctx,
     this._clientMetadata,
     this._providerMetadata,
   );
 
-  HookContext.from(
+  static HookContext<T> from<T>(
     String key,
     FlagValueType type,
     Metadata clientMetadata,
     Metadata providerMetadata,
     EvaluationContext ctx,
     T defaultValue,
-  ) : this._(
-          key,
-          type,
-          defaultValue,
-          ctx,
-          clientMetadata,
-          providerMetadata,
-        );
+  ) =>
+      HookContext<T>._(
+        key,
+        type,
+        defaultValue,
+        ctx,
+        clientMetadata,
+        providerMetadata,
+      );
 }
