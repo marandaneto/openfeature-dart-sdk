@@ -5,6 +5,7 @@ import 'client.dart';
 import 'error_code.dart';
 import 'evaluation_context.dart';
 import 'exceptions/general_error.dart';
+import 'exceptions/open_feature_error.dart';
 import 'feature_provider.dart';
 import 'flag_evaluation_details.dart';
 import 'flag_evaluation_options.dart';
@@ -58,12 +59,13 @@ class OpenFeatureClient implements Client {
   @override
   EvaluationContext? get evaluationContext => _evaluationContext;
 
-  // make it immutable?
   @override
-  List<Hook> get hooks => _clientHooks;
+  List<Hook> get hooks => List.unmodifiable(_clientHooks);
 
   @override
   Metadata get metadata => _metadata;
+
+  String? get version => _version;
 
   @override
   set evaluationContext(EvaluationContext? evaluationContext) =>
@@ -95,6 +97,14 @@ class OpenFeatureClient implements Client {
     final theOptions = options ?? FlagEvaluationOptions.empty();
     FlagEvaluationDetails<T>? details;
     final provider = _openFeatureApi.provider ?? NoOpProvider();
+
+    if (provider is NoOpProvider) {
+      log(
+        'No provider configured, using no-op provider.',
+        name: 'openfeature',
+      );
+    }
+
     final hookCtx = HookContext.from<T>(
       key,
       type,
@@ -129,27 +139,27 @@ class OpenFeatureClient implements Client {
       details = FlagEvaluationDetails.from<T>(providerEval, key);
       _hookSupport.afterHooks(
           type, hookCtx, details, mergedHooks, theOptions.hookHints);
-    } catch (e, stackTrace) {
+    } catch (error, stackTrace) {
       log(
-        "Error evaluating flag $key",
-        error: e,
+        'Error evaluating flag $key',
+        error: error,
         stackTrace: stackTrace,
         name: 'openfeature',
       );
 
-      // TODO: treat errors
-
-      _hookSupport.errorHooks(
-          type, hookCtx, e, mergedHooks, theOptions.hookHints);
+      final errorCode =
+          (error is OpenFeatureError) ? error.errorCode : ErrorCode.general;
 
       details = FlagEvaluationDetails<T>(
         key,
         defaultValue,
-        // variant: '',
         reason: Reason.error,
-        errorCode: ErrorCode.general,
-        errorMessage: e.toString(),
+        errorCode: errorCode,
+        errorMessage: error.toString(),
       );
+
+      _hookSupport.errorHooks(
+          type, hookCtx, error, mergedHooks, theOptions.hookHints);
     } finally {
       _hookSupport.afterAllHooks(
           type, hookCtx, mergedHooks, theOptions.hookHints);

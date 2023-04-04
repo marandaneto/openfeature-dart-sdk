@@ -9,11 +9,15 @@ import 'provider_evaluation.dart';
 abstract class FeatureProvider {
   Metadata get metadata;
 
-  List<Hook> get providerHooks => [];
+  final List<Hook> _providerHooks = [];
+
+  List<Hook> get providerHooks => List.unmodifiable(_providerHooks);
 
   FutureOr<ProviderEvaluation<bool>> getBooleanEvaluation(
     String key,
     bool defaultValue, {
     EvaluationContext? evaluationContext,
   });
+
+  addHook(Hook hook) => _providerHooks.add(hook);
 }

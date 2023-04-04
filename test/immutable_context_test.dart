@@ -82,8 +82,8 @@ void main() {
 
     expect(merged.targetingKey, 'targeting_key');
     // list is reversed, is that a bug?
-    expect(ListEquality().equals(merged.keySet.toList(), ['key2', 'key1']),
-        true);
+    expect(
+        ListEquality().equals(merged.keySet.toList(), ['key2', 'key1']), true);
 
     final key1 = merged.getValue('key1');
     expect(key1?.isStructure, true);
@@ -111,8 +111,8 @@ void main() {
     final overridingCtx = ImmutableContext.empty();
     final merged = ctx.merge(overridingCtx);
 
-    expect(ListEquality().equals(merged.keySet.toList(), ['key2', 'key1']),
-        true);
+    expect(
+        ListEquality().equals(merged.keySet.toList(), ['key2', 'key1']), true);
 
     final key1 = merged.getValue('key1');
     expect(key1?.isStructure, true);

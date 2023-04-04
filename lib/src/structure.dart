@@ -72,8 +72,8 @@ abstract class Structure {
           merged[key]!.isStructure) {
         final mergedValue = merged[key]!.asStructure!;
         final overridingValue = value.asStructure!;
-        final newMap = mergeStructures(newStructure, mergedValue.asValueMap,
-            overridingValue.asValueMap);
+        final newMap = mergeStructures(
+            newStructure, mergedValue.asValueMap, overridingValue.asValueMap);
         merged[key] = Value.fromStructure(newStructure(newMap));
       } else {
         merged[key] = value;

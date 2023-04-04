@@ -46,7 +46,7 @@ void main() {
     final structure = ImmutableStructure.fromAttributes(map);
 
     final keys = structure.keySet;
-    keys.remove(key);
+    expect(() => keys.remove(key), throwsA(isA<UnsupportedError>()));
 
     expect(structure.keySet.length, 2);
     expect(structure.getValue(key)?.asString, keyValue);

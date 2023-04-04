@@ -74,10 +74,10 @@ class HookSupport {
   void _executeChecked(Hook hook, HookConsumer consumer, String hookMethod) {
     try {
       consumer(hook);
-    } catch (e, stackTrace) {
+    } catch (error, stackTrace) {
       log(
-        "Error in $hookMethod hook: $hook",
-        error: e,
+        'Error in $hookMethod hook: $hook',
+        error: error,
         stackTrace: stackTrace,
         name: 'openfeature',
       );

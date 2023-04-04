@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:meta/meta.dart';
 
 import 'structure.dart';
@@ -18,16 +16,16 @@ class ImmutableStructure extends Structure {
   ImmutableStructure.empty() : this._({});
 
   @override
-  Map<String, Object> get asObjectMap => _attributes
-      .map((key, value) => MapEntry(key, convertValue(getValue(key)!)!));
+  Map<String, Object> get asObjectMap => Map.unmodifiable(_attributes
+      .map((key, value) => MapEntry(key, convertValue(getValue(key)!)!)));
 
   @override
-  Map<String, Value> get asValueMap =>
-      _attributes.map((key, value) => MapEntry(key, getValue(key)!));
+  Map<String, Value> get asValueMap => Map.unmodifiable(
+      _attributes.map((key, value) => MapEntry(key, getValue(key)!)));
 
   @override
   Value? getValue(String key) => _attributes[key]?.clone();
 
   @override
-  Set<String> get keySet => HashSet.from(_attributes.keys);
+  Set<String> get keySet => Set.unmodifiable(_attributes.keys);
 }

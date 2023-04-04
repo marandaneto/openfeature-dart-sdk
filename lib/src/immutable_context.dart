@@ -30,8 +30,8 @@ class ImmutableContext extends EvaluationContext {
 
   @override
   EvaluationContext merge(EvaluationContext? overridingContext) {
-    final newContext = overridingContext ??
-        ImmutableContext.from(targetingKey, asValueMap);
+    final newContext =
+        overridingContext ?? ImmutableContext.from(targetingKey, asValueMap);
     var newTargetingKey = '';
     final targetKey = targetingKey;
     if (!(targetKey.trim() == '')) {
@@ -53,14 +53,15 @@ class ImmutableContext extends EvaluationContext {
   }
 
   @override
-  Map<String, Object> get asObjectMap => _structure.asObjectMap;
+  Map<String, Object> get asObjectMap =>
+      Map.unmodifiable(_structure.asObjectMap);
 
   @override
-  Map<String, Value> get asValueMap => _structure.asValueMap;
+  Map<String, Value> get asValueMap => Map.unmodifiable(_structure.asValueMap);
 
   @override
   Value? getValue(String key) => _structure.getValue(key);
 
   @override
-  Set<String> get keySet => _structure.keySet;
+  Set<String> get keySet => Set.unmodifiable(_structure.keySet);
 }

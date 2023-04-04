@@ -14,7 +14,5 @@ abstract class Client extends Features {
   // Dart does not have varargs
   void addHook(Hook hook);
 
-  // remove hooks?
-
   List<Hook> get hooks;
 }
