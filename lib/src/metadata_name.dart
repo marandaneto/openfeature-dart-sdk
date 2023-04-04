@@ -4,10 +4,10 @@ import 'metadata.dart';
 
 @internal
 class MetadataName implements Metadata {
-  final String? _name;
+  final String _name;
 
-  MetadataName({String? name}) : _name = name;
-
+  MetadataName(this._name);
+  
   @override
-  String? getName() => _name;
+  String get name => _name;
 }

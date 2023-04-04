@@ -13,7 +13,7 @@ void main() {
     final ctx = ImmutableContext.fromAttributes(map);
     map['key2'] = Value.fromObject('value2');
 
-    expect(identical(ctx.asValueMap(), map), false);
+    expect(identical(ctx.asValueMap, map), false);
   });
 
   test('should change targeting key from overriding context', () {
@@ -25,7 +25,7 @@ void main() {
 
     final merged = ctx.merge(overridingCtx);
 
-    expect(merged.getTargetingKey(), 'overridingKey');
+    expect(merged.targetingKey, 'overridingKey');
   });
 
   test('target key should not change from overriding context if missing', () {
@@ -37,7 +37,7 @@ void main() {
 
     final merged = ctx.merge(overridingCtx);
 
-    expect(merged.getTargetingKey(), key);
+    expect(merged.targetingKey, key);
   });
 
   test(
@@ -50,9 +50,9 @@ void main() {
 
     final merged = ctx.merge(null);
 
-    expect(merged.getTargetingKey(), key);
-    expect(merged.keySet().length, 1);
-    expect(merged.getValue(key)?.asString(), keyValue);
+    expect(merged.targetingKey, key);
+    expect(merged.keySet.length, 1);
+    expect(merged.getValue(key)?.asString, keyValue);
   });
 
   test(
@@ -80,18 +80,18 @@ void main() {
         ImmutableContext.from('targeting_key', overridingAttributes);
     final merged = ctx.merge(overridingCtx);
 
-    expect(merged.getTargetingKey(), 'targeting_key');
+    expect(merged.targetingKey, 'targeting_key');
     // list is reversed, is that a bug?
-    expect(ListEquality().equals(merged.keySet().toList(), ['key2', 'key1']),
+    expect(ListEquality().equals(merged.keySet.toList(), ['key2', 'key1']),
         true);
 
     final key1 = merged.getValue('key1');
     expect(key1?.isStructure, true);
 
-    final value = key1?.asStructure();
+    final value = key1?.asStructure;
     expect(
         ListEquality()
-            .equals(value?.keySet().toList(), ['overriding_key1_1', 'key1_1']),
+            .equals(value?.keySet.toList(), ['overriding_key1_1', 'key1_1']),
         true);
   });
 
@@ -111,13 +111,13 @@ void main() {
     final overridingCtx = ImmutableContext.empty();
     final merged = ctx.merge(overridingCtx);
 
-    expect(ListEquality().equals(merged.keySet().toList(), ['key2', 'key1']),
+    expect(ListEquality().equals(merged.keySet.toList(), ['key2', 'key1']),
         true);
 
     final key1 = merged.getValue('key1');
     expect(key1?.isStructure, true);
 
-    final value = key1?.asStructure();
-    expect(ListEquality().equals(value?.keySet().toList(), ['key1_1']), true);
+    final value = key1?.asStructure;
+    expect(ListEquality().equals(value?.keySet.toList(), ['key1_1']), true);
   });
 }

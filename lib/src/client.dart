@@ -5,16 +5,16 @@ import 'metadata.dart';
 
 /// Interface used to resolve flags of varying types.
 abstract class Client extends Features {
-  Metadata getMetadata();
+  Metadata get metadata;
 
-  EvaluationContext? getEvaluationContext();
+  EvaluationContext? get evaluationContext;
 
-  void setEvaluationContext(EvaluationContext ctx);
+  set evaluationContext(EvaluationContext? ctx);
 
   // Dart does not have varargs
   void addHook(Hook hook);
 
   // remove hooks?
 
-  List<Hook> getHooks();
+  List<Hook> get hooks;
 }

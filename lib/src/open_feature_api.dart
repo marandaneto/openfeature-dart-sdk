@@ -20,15 +20,15 @@ class OpenFeatureAPI {
 
   factory OpenFeatureAPI() => _instance;
 
-  Metadata? getProviderMetadata() => provider?.getMetadata();
+  Metadata? get providerMetadata => provider?.metadata;
 
   List<Hook> get hooks => List.unmodifiable(_apiHooks);
 
-  EvaluationContext? getEvaluationContext() => _evaluationContext;
+  EvaluationContext? get evaluationContext => _evaluationContext;
 
-  Client getClient({
-    String? name,
+  Client getClient(
+    String name, {
     String? version,
   }) =>
-      OpenFeatureClient(this, name: name, version: version);
+      OpenFeatureClient(this, name, version: version);
 }

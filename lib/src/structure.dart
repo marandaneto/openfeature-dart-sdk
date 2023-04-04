@@ -7,43 +7,43 @@ typedef StructureMergeFunction = Structure Function(
 
 /// [Structure] represents a potentially nested object type which is used to represent structured data.
 abstract class Structure {
-  Set<String> keySet();
+  Set<String> get keySet;
 
   Value? getValue(String key);
 
-  Map<String, Value> asValueMap();
+  Map<String, Value> get asValueMap;
 
-  Map<String, Object> asObjectMap();
+  Map<String, Object> get asObjectMap;
 
   // TODO: throw instead of returning null
   Object? convertValue(Value value) {
     if (value.isBoolean) {
-      return value.asBoolean();
+      return value.asBoolean;
     }
 
     if (value.isNumber) {
-      final number = value.asObject();
+      final number = value.asObject;
 
       if (number is int) {
-        return value.asInteger();
+        return value.asInteger;
       } else if (number is double) {
-        return value.asDouble();
+        return value.asDouble;
       } else {
         return null;
       }
     }
 
     if (value.isString) {
-      return value.asString();
+      return value.asString;
     }
 
     if (value.isValueList) {
-      return value.asValueList()?.map((e) => convertValue(e)).toList();
+      return value.asValueList?.map((e) => convertValue(e)).toList();
     }
 
     if (value.isStructure) {
-      final structure = value.asStructure();
-      return structure?.asValueMap().map((key, value) {
+      final structure = value.asStructure;
+      return structure?.asValueMap.map((key, value) {
         return MapEntry(key, convertValue(structure.getValue(key)!));
       });
     }
@@ -67,10 +67,10 @@ abstract class Structure {
       if (value.isStructure &&
           merged.containsKey(key) &&
           merged[key]!.isStructure) {
-        final mergedValue = merged[key]!.asStructure()!;
-        final overridingValue = value.asStructure()!;
-        final newMap = mergeStructures(newStructure, mergedValue.asValueMap(),
-            overridingValue.asValueMap());
+        final mergedValue = merged[key]!.asStructure!;
+        final overridingValue = value.asStructure!;
+        final newMap = mergeStructures(newStructure, mergedValue.asValueMap,
+            overridingValue.asValueMap);
         merged[key] = Value.fromStructure(newStructure(newMap));
       } else {
         merged[key] = value;

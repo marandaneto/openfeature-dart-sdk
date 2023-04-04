@@ -5,9 +5,8 @@ void main() {
   final noOp = NoOpProvider();
 
   test('return default bool value', () {
-    ProviderEvaluation<bool> eval =
-        noOp.getBooleanEvaluation('key', defaultValue: true);
+    final eval = noOp.getBooleanEvaluation('key', true);
 
-    expect(eval.getValue(), true);
+    expect(eval.value, true);
   });
 }

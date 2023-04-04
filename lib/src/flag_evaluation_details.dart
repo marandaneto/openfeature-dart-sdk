@@ -25,19 +25,19 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
         _variant = variant;
 
   @override
-  ErrorCode? getErrorCode() => _errorCode;
+  ErrorCode? get errorCode => _errorCode;
 
   @override
-  String? getErrorMessage() => _errorMessage;
+  String? get errorMessage => _errorMessage;
 
   @override
-  Reason? getReason() => _reason;
+  Reason? get reason => _reason;
 
   @override
-  T getValue() => _value;
+  T get value => _value;
 
   @override
-  String? getVariant() => _variant;
+  String? get variant => _variant;
 
   static FlagEvaluationDetails<T> from<T>(
     ProviderEvaluation<T> providerEval,
@@ -45,10 +45,10 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
   ) =>
       FlagEvaluationDetails<T>(
         flagKey,
-        providerEval.getValue(),
-        variant: providerEval.getVariant(),
-        reason: providerEval.getReason(),
-        errorCode: providerEval.getErrorCode(),
-        errorMessage: providerEval.getErrorMessage(),
+        providerEval.value,
+        variant: providerEval.variant,
+        reason: providerEval.reason,
+        errorCode: providerEval.errorCode,
+        errorMessage: providerEval.errorMessage,
       );
 }

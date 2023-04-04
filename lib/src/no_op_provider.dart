@@ -11,11 +11,14 @@ class NoOpProvider extends FeatureProvider {
   static const String _name = "No-op Provider";
 
   @override
-  Metadata getMetadata() => MetadataName(name: _name);
+  Metadata get metadata => MetadataName(_name);
 
   @override
-  ProviderEvaluation<bool> getBooleanEvaluation(String key,
-          {bool defaultValue = false, EvaluationContext? ctx}) =>
+  ProviderEvaluation<bool> getBooleanEvaluation(
+    String key,
+    bool defaultValue, {
+    EvaluationContext? ctx,
+  }) =>
       ProviderEvaluation<bool>(
         defaultValue,
         _defaultVariant,

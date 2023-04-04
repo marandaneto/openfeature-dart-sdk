@@ -20,18 +20,18 @@ import 'reason.dart';
 
 class OpenFeatureClient implements Client {
   final OpenFeatureAPI _openFeatureApi;
-  final String? _name;
+  final String _name;
   final String? _version;
   final List<Hook> _clientHooks = [];
   EvaluationContext? _evaluationContext;
   final HookSupport _hookSupport = HookSupport();
 
   OpenFeatureClient(
-    this._openFeatureApi, {
+    this._openFeatureApi,
+    this._name, {
     String? name,
     String? version,
-  })  : _name = name,
-        _version = version;
+  }) : _version = version;
 
   @override
   void addHook(Hook hook) => _clientHooks.add(hook);
@@ -48,20 +48,20 @@ class OpenFeatureClient implements Client {
         defaultValue: defaultValue,
         ctx: ctx,
         options: options,
-      ).getValue();
+      ).value;
 
   @override
-  EvaluationContext? getEvaluationContext() => _evaluationContext;
+  EvaluationContext? get evaluationContext => _evaluationContext;
 
   // make it immutable?
   @override
-  List<Hook> getHooks() => _clientHooks;
+  List<Hook> get hooks => _clientHooks;
 
   @override
-  Metadata getMetadata() => MetadataName(name: _name);
+  Metadata get metadata => MetadataName(_name);
 
   @override
-  void setEvaluationContext(EvaluationContext ctx) => _evaluationContext = ctx;
+  set evaluationContext(EvaluationContext? ctx) => _evaluationContext = ctx;
 
   @override
   FlagEvaluationDetails<bool> getBooleanDetails(
@@ -92,13 +92,13 @@ class OpenFeatureClient implements Client {
     final hookCtx = HookContext.from<T>(
       key,
       type,
-      getMetadata(),
-      provider.getMetadata(),
+      metadata,
+      provider.metadata,
       context,
       defaultValue,
     );
     final mergedHooks = [
-      ...provider.getProviderHooks(),
+      ...provider.providerHooks,
       ...theOptions.hooks,
       ..._clientHooks,
       ..._openFeatureApi.hooks,
@@ -106,9 +106,9 @@ class OpenFeatureClient implements Client {
 
     try {
       final apiContext =
-          _openFeatureApi.getEvaluationContext() ?? ImmutableContext.empty();
+          _openFeatureApi.evaluationContext ?? ImmutableContext.empty();
 
-      final clientContext = getEvaluationContext() ?? ImmutableContext.empty();
+      final clientContext = evaluationContext ?? ImmutableContext.empty();
 
       final ctxFromHook = _hookSupport.beforeHooks(
           type, hookCtx, mergedHooks, theOptions.hookHints);
@@ -161,8 +161,7 @@ class OpenFeatureClient implements Client {
   ) {
     switch (type) {
       case FlagValueType.boolean:
-        return provider.getBooleanEvaluation(key,
-            defaultValue: defaultValue as bool,
+        return provider.getBooleanEvaluation(key, defaultValue as bool,
             ctx: invocationContext) as ProviderEvaluation<T>;
       default:
         // TODO: implement others

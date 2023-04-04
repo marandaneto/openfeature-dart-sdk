@@ -26,41 +26,41 @@ class ImmutableContext extends EvaluationContext {
   ImmutableContext.empty() : this('', ImmutableStructure.empty());
 
   @override
-  String getTargetingKey() => _targetingKey;
+  String get targetingKey => _targetingKey;
 
   @override
   EvaluationContext merge(EvaluationContext? overridingContext) {
     final newContext = overridingContext ??
-        ImmutableContext.from(getTargetingKey(), asValueMap());
+        ImmutableContext.from(targetingKey, asValueMap);
     var newTargetingKey = '';
-    final targetKey = getTargetingKey();
+    final targetKey = targetingKey;
     if (!(targetKey.trim() == '')) {
       newTargetingKey = targetKey;
     }
 
-    final overridingTargetKey = newContext.getTargetingKey();
+    final overridingTargetKey = newContext.targetingKey;
     if (!(overridingTargetKey.trim() == '')) {
       newTargetingKey = overridingTargetKey;
     }
 
     final merged = mergeStructures(
       (attributes) => ImmutableStructure.fromAttributes(attributes),
-      asValueMap(),
-      newContext.asValueMap(),
+      asValueMap,
+      newContext.asValueMap,
     );
 
     return ImmutableContext.from(newTargetingKey, merged);
   }
 
   @override
-  Map<String, Object> asObjectMap() => _structure.asObjectMap();
+  Map<String, Object> get asObjectMap => _structure.asObjectMap;
 
   @override
-  Map<String, Value> asValueMap() => _structure.asValueMap();
+  Map<String, Value> get asValueMap => _structure.asValueMap;
 
   @override
   Value? getValue(String key) => _structure.getValue(key);
 
   @override
-  Set<String> keySet() => _structure.keySet();
+  Set<String> get keySet => _structure.keySet;
 }

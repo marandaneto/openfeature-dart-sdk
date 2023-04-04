@@ -27,7 +27,7 @@ void main() {
 
     for (final item in list) {
       final value = Value.fromObject(item);
-      expect(value.asObject(), item);
+      expect(value.asObject, item);
     }
   });
 
@@ -35,34 +35,34 @@ void main() {
     final value = Value.fromObject(1);
 
     expect(value.isNumber, true);
-    expect(value.asInteger(), 1);
+    expect(value.asInteger, 1);
   });
 
   test('double object should contain double', () {
     final value = Value.fromObject(1.0);
 
     expect(value.isNumber, true);
-    expect(value.asDouble(), 1.0);
+    expect(value.asDouble, 1.0);
   });
 
   test('num object should contain converted num', () {
-    expect(Value.fromObject(1.75).asInteger(), 1);
+    expect(Value.fromObject(1.75).asInteger, 1);
 
-    expect(Value.fromObject(1).asDouble(), 1.0);
+    expect(Value.fromObject(1).asDouble, 1.0);
   });
 
   test('boolean object should contain boolean', () {
     final value = Value.fromObject(true);
 
     expect(value.isBoolean, true);
-    expect(value.asBoolean(), true);
+    expect(value.asBoolean, true);
   });
 
   test('string object should contain string', () {
     final value = Value.fromObject('test');
 
     expect(value.isString, true);
-    expect(value.asString(), 'test');
+    expect(value.asString, 'test');
   });
 
   test('structure object should contain structure', () {
@@ -71,8 +71,8 @@ void main() {
     final value = Value.fromObject(structure);
 
     expect(value.isStructure, true);
-    expect(value.asStructure(), structure);
-    expect(value.asStructure()?.getValue('test')?.asString(), 'value');
+    expect(value.asStructure, structure);
+    expect(value.asStructure?.getValue('test')?.asString, 'value');
   });
 
   test('value list object should contain value list', () {
@@ -80,8 +80,8 @@ void main() {
     final value = Value.fromObject(list);
 
     expect(value.isValueList, true);
-    expect(value.asValueList(), list);
-    expect(value.asValueList()?.first.asString(), 'value');
+    expect(value.asValueList, list);
+    expect(value.asValueList?.first.asString, 'value');
   });
 }
 

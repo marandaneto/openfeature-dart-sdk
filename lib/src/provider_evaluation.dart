@@ -19,17 +19,17 @@ class ProviderEvaluation<T> implements BaseEvaluation<T> {
         _errorMessage = errorMessage;
 
   @override
-  ErrorCode? getErrorCode() => _errorCode;
+  ErrorCode? get errorCode => _errorCode;
 
   @override
-  String? getErrorMessage() => _errorMessage;
+  String? get errorMessage => _errorMessage;
 
   @override
-  Reason getReason() => _reason;
+  Reason get reason => _reason;
 
   @override
-  T getValue() => _value;
+  T get value => _value;
 
   @override
-  String getVariant() => _variant;
+  String get variant => _variant;
 }

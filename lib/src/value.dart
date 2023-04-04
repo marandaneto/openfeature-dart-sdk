@@ -50,63 +50,62 @@ class Value {
 
   bool get isNull => _innerObject == null;
 
-  bool? asBoolean() {
+  bool? get asBoolean {
     if (isBoolean) {
       return _innerObject as bool;
     }
     return null;
   }
 
-  String? asString() {
+  String? get asString {
     if (isString) {
       return _innerObject as String;
     }
     return null;
   }
 
-  int? asInteger() {
+  int? get asInteger {
     if (isNumber) {
       return (_innerObject as num).toInt();
     }
     return null;
   }
 
-  double? asDouble() {
+  double? get asDouble {
     if (isNumber) {
       return (_innerObject as num).toDouble();
     }
     return null;
   }
 
-  Structure? asStructure() {
+  Structure? get asStructure {
     if (isStructure) {
       return _innerObject as Structure;
     }
     return null;
   }
 
-  List<Value>? asValueList() {
+  List<Value>? get asValueList {
     if (isValueList) {
       return _innerObject as List<Value>;
     }
     return null;
   }
 
-  Object? asObject() => _innerObject;
+  Object? get asObject => _innerObject;
 
   Value clone() {
     if (isValueList) {
-      final copy = asValueList()!.map((e) => Value._(e)).toList();
+      final copy = asValueList!.map((e) => Value._(e)).toList();
       return Value.fromValueList(copy);
     }
 
     if (isStructure) {
-      final copy = asStructure()!
-          .asValueMap()
+      final copy = asStructure!.asValueMap
           .map((key, value) => MapEntry(key, Value._(value.clone())));
       return Value.fromStructure(ImmutableStructure.fromAttributes(copy));
     }
 
-    return Value._(asObject());
+    return Value._(asObject);
   }
 }

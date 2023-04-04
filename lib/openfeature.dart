@@ -17,3 +17,4 @@ export 'src/string_hook.dart';
 export 'src/flag_evaluation_details.dart';
 export 'src/flag_evaluation_options.dart';
 export 'src/hook_support.dart';
+export 'src/reason.dart';

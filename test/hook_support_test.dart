@@ -15,8 +15,8 @@ void main() {
     final hookCtx = HookContext.from<String>(
       'flagKey',
       FlagValueType.string,
-      MetadataName(name: 'client'),
-      MetadataName(name: 'provider'),
+      MetadataName('client'),
+      MetadataName('provider'),
       baseCtx,
       'defaultValue',
     );
@@ -29,9 +29,9 @@ void main() {
     final result =
         hookSupport.beforeHooks(FlagValueType.string, hookCtx, hooks, {});
 
-    expect(result.getValue('bla')?.asString(), 'blubber');
-    expect(result.getValue('foo')?.asString(), 'bar');
-    expect(result.getValue(key)?.asString(), keyValue);
+    expect(result.getValue('bla')?.asString, 'blubber');
+    expect(result.getValue('foo')?.asString, 'bar');
+    expect(result.getValue(key)?.asString, keyValue);
   });
 
   test('should always call generic hook', () {
@@ -43,8 +43,8 @@ void main() {
     final hookCtx = HookContext.from<String>(
       'flagKey',
       FlagValueType.string,
-      MetadataName(name: 'client'),
-      MetadataName(name: 'provider'),
+      MetadataName('client'),
+      MetadataName('provider'),
       baseCtx,
       'defaultValue',
     );

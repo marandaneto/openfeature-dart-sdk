@@ -5,13 +5,13 @@ import 'provider_evaluation.dart';
 
 /// The interface implemented by upstream flag providers to resolve flags for their service.
 abstract class FeatureProvider {
-  Metadata getMetadata();
+  Metadata get metadata;
 
-  List<Hook> getProviderHooks() => [];
+  List<Hook> get providerHooks => [];
 
   ProviderEvaluation<bool> getBooleanEvaluation(
-    String key, {
-    bool defaultValue,
+    String key,
+    bool defaultValue, {
     EvaluationContext? ctx,
   });
 }
