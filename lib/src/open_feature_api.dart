@@ -12,7 +12,7 @@ class OpenFeatureAPI {
 
   FeatureProvider? provider;
 
-  EvaluationContext? _evaluationContext;
+  EvaluationContext? evaluationContext;
 
   OpenFeatureAPI._();
 
@@ -24,11 +24,13 @@ class OpenFeatureAPI {
 
   List<Hook> get hooks => List.unmodifiable(_apiHooks);
 
-  EvaluationContext? get evaluationContext => _evaluationContext;
-
   Client getClient(
     String name, {
     String? version,
   }) =>
       OpenFeatureClient(this, name, version: version);
+
+  void clearHooks() => _apiHooks.clear();
+
+  void addHook(Hook hook) => _apiHooks.add(hook);
 }

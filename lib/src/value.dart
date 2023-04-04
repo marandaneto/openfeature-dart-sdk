@@ -25,6 +25,7 @@ class Value {
 
   Value.fromValueList(List<Value> value) : _innerObject = value;
 
+  /// can throw [ArgumentError] if the type is not supported.
   Value.fromObject(Object? value) : _innerObject = value {
     if (!isBoolean &&
         !isString &&

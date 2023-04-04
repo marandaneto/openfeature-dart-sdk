@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:meta/meta.dart';
 
+import 'exceptions/value_not_convertable_error.dart';
 import 'value.dart';
 
 typedef StructureMergeFunction = Structure Function(
@@ -17,7 +18,7 @@ abstract class Structure {
 
   Map<String, Object> get asObjectMap;
 
-  // TODO: throw instead of returning null
+  /// can throw [ValueNotConvertableError] if the type is not supported.
   Object? convertValue(Value value) {
     if (value.isBoolean) {
       return value.asBoolean;
@@ -50,7 +51,8 @@ abstract class Structure {
       });
     }
 
-    return null;
+    throw ValueNotConvertableError(
+        '${value.asObject} is not convertable to a known type.');
   }
 
   @internal

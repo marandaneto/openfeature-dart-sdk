@@ -25,7 +25,10 @@ class OpenFeatureClient implements Client {
   final OpenFeatureAPI _openFeatureApi;
   final String? _version;
   final List<Hook> _clientHooks = [];
-  EvaluationContext? _evaluationContext;
+
+  @override
+  EvaluationContext? evaluationContext;
+
   final HookSupport _hookSupport = HookSupport();
 
   final MetadataName _metadata;
@@ -57,19 +60,12 @@ class OpenFeatureClient implements Client {
   }
 
   @override
-  EvaluationContext? get evaluationContext => _evaluationContext;
-
-  @override
   List<Hook> get hooks => List.unmodifiable(_clientHooks);
 
   @override
   Metadata get metadata => _metadata;
 
   String? get version => _version;
-
-  @override
-  set evaluationContext(EvaluationContext? evaluationContext) =>
-      _evaluationContext = evaluationContext;
 
   @override
   FutureOr<FlagEvaluationDetails<bool>> getBooleanDetails(
@@ -168,6 +164,7 @@ class OpenFeatureClient implements Client {
     return details;
   }
 
+  /// can throw [GeneralError] if the type is not supported
   FutureOr<ProviderEvaluation<T>> _createProviderEvaluation<T>(
     FlagValueType type,
     String key,
