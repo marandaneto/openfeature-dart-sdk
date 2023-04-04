@@ -17,9 +17,7 @@ class Value {
 
   Value.fromString(String value) : _innerObject = value;
 
-  Value.fromInteger(int value) : _innerObject = value;
-
-  Value.fromDouble(double value) : _innerObject = value;
+  Value.fromNumber(num value) : _innerObject = value;
 
   Value.fromStructure(Structure value) : _innerObject = value;
 
@@ -65,16 +63,9 @@ class Value {
     return null;
   }
 
-  int? get asInteger {
+  num? get asNum {
     if (isNumber) {
-      return (_innerObject as num).toInt();
-    }
-    return null;
-  }
-
-  double? get asDouble {
-    if (isNumber) {
-      return (_innerObject as num).toDouble();
+      return _innerObject as num;
     }
     return null;
   }

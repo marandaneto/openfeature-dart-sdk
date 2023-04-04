@@ -35,20 +35,14 @@ void main() {
     final value = Value.fromObject(1);
 
     expect(value.isNumber, true);
-    expect(value.asInteger, 1);
+    expect(value.asNum, 1);
   });
 
   test('double object should contain double', () {
     final value = Value.fromObject(1.0);
 
     expect(value.isNumber, true);
-    expect(value.asDouble, 1.0);
-  });
-
-  test('num object should contain converted num', () {
-    expect(Value.fromObject(1.75).asInteger, 1);
-
-    expect(Value.fromObject(1).asDouble, 1.0);
+    expect(value.asNum, 1.0);
   });
 
   test('boolean object should contain boolean', () {

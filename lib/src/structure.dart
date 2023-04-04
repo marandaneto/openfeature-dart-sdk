@@ -25,15 +25,7 @@ abstract class Structure {
     }
 
     if (value.isNumber) {
-      final number = value.asObject;
-
-      if (number is int) {
-        return value.asInteger;
-      } else if (number is double) {
-        return value.asDouble;
-      } else {
-        return null;
-      }
+      return value.asNum;
     }
 
     if (value.isString) {

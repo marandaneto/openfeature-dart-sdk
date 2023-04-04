@@ -1,8 +1,8 @@
 import 'flag_value_type.dart';
 import 'hook.dart';
 
-abstract class DoubleHook extends Hook<double> {
+abstract class NumberHook extends Hook<num> {
   @override
   bool supportsFlagValueType(FlagValueType flagValueType) =>
-      FlagValueType.double == flagValueType;
+      FlagValueType.number == flagValueType;
 }
