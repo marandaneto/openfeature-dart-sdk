@@ -5,9 +5,9 @@ import 'reason.dart';
 abstract class BaseEvaluation<T> {
   T getValue();
 
-  String getVariant();
+  String? getVariant();
 
-  Reason getReason();
+  Reason? getReason();
 
   ErrorCode? getErrorCode();
 

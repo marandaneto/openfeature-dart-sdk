@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:openfeature_dart/openfeature.dart';
 import 'package:test/test.dart';
 
@@ -56,5 +57,67 @@ void main() {
 
   test(
       'merge should retain retain subkeys from existing context when the overriding context has the same targeting key',
-      () {});
+      () {
+    final key1Attributes = {
+      'key1_1': Value.fromObject('val1_1'),
+    };
+    final attributes = {
+      'key1': Value.fromStructure(
+          ImmutableStructure.fromAttributes(key1Attributes)),
+      'key2': Value.fromObject('val2'),
+    };
+    final ovKey1Attributes = {
+      'overriding_key1_1': Value.fromObject('overriding_val_1_1'),
+    };
+    final overridingAttributes = {
+      'key1': Value.fromStructure(
+        ImmutableStructure.fromAttributes(ovKey1Attributes),
+      )
+    };
+
+    final ctx = ImmutableContext.from('targeting_key', attributes);
+    final overridingCtx =
+        ImmutableContext.from('targeting_key', overridingAttributes);
+    final merged = ctx.merge(overridingCtx);
+
+    expect(merged.getTargetingKey(), 'targeting_key');
+    // list is reversed, is that a bug?
+    expect(ListEquality().equals(merged.keySet().toList(), ['key2', 'key1']),
+        true);
+
+    final key1 = merged.getValue('key1');
+    expect(key1?.isStructure, true);
+
+    final value = key1?.asStructure();
+    expect(
+        ListEquality()
+            .equals(value?.keySet().toList(), ['overriding_key1_1', 'key1_1']),
+        true);
+  });
+
+  test(
+      'merge should retain retain subkeys from existing context when the overriding context does not have the targeting key',
+      () {
+    final key1Attributes = {
+      'key1_1': Value.fromObject('val1_1'),
+    };
+    final attributes = {
+      'key1': Value.fromStructure(
+          ImmutableStructure.fromAttributes(key1Attributes)),
+      'key2': Value.fromObject('val2'),
+    };
+
+    final ctx = ImmutableContext.from('targeting_key', attributes);
+    final overridingCtx = ImmutableContext.empty();
+    final merged = ctx.merge(overridingCtx);
+
+    expect(ListEquality().equals(merged.keySet().toList(), ['key2', 'key1']),
+        true);
+
+    final key1 = merged.getValue('key1');
+    expect(key1?.isStructure, true);
+
+    final value = key1?.asStructure();
+    expect(ListEquality().equals(value?.keySet().toList(), ['key1_1']), true);
+  });
 }

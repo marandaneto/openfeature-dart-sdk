@@ -138,10 +138,10 @@ class OpenFeatureClient implements Client {
       details = FlagEvaluationDetails<T>(
         key,
         defaultValue,
-        '',
-        Reason.error,
+        // variant: '',
+        reason: Reason.error,
         errorCode: ErrorCode.general,
-        errorMessage: '',
+        // errorMessage: '',
       );
     } finally {
       _hookSupport.afterAllHooks(

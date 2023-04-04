@@ -49,6 +49,7 @@ void main() {
     keys.remove(key);
 
     expect(structure.keySet().length, 2);
+    expect(structure.getValue(key)?.asString(), keyValue);
   });
 
   test('getting a missing value should return null', () {

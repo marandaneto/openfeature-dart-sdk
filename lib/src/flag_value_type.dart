@@ -6,4 +6,5 @@ enum FlagValueType {
   double,
   object,
   boolean,
+  // TODO: datetime
 }

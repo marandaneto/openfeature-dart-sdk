@@ -7,20 +7,22 @@ import 'reason.dart';
 class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
   final String _flagKey;
   final T _value;
-  final String _variant;
-  final Reason _reason;
+  final String? _variant;
+  final Reason? _reason;
   final ErrorCode? _errorCode;
   final String? _errorMessage;
 
   FlagEvaluationDetails(
     this._flagKey,
-    this._value,
-    this._variant,
-    this._reason, {
+    this._value, {
+    String? variant,
+    Reason? reason,
     ErrorCode? errorCode,
     String? errorMessage,
   })  : _errorCode = errorCode,
-        _errorMessage = errorMessage;
+        _errorMessage = errorMessage,
+        _reason = reason,
+        _variant = variant;
 
   @override
   ErrorCode? getErrorCode() => _errorCode;
@@ -29,13 +31,13 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
   String? getErrorMessage() => _errorMessage;
 
   @override
-  Reason getReason() => _reason;
+  Reason? getReason() => _reason;
 
   @override
   T getValue() => _value;
 
   @override
-  String getVariant() => _variant;
+  String? getVariant() => _variant;
 
   static FlagEvaluationDetails<T> from<T>(
     ProviderEvaluation<T> providerEval,
@@ -44,8 +46,8 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
       FlagEvaluationDetails<T>(
         flagKey,
         providerEval.getValue(),
-        providerEval.getVariant(),
-        providerEval.getReason(),
+        variant: providerEval.getVariant(),
+        reason: providerEval.getReason(),
         errorCode: providerEval.getErrorCode(),
         errorMessage: providerEval.getErrorMessage(),
       );
