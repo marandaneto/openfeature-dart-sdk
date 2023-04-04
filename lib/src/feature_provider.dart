@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'evaluation_context.dart';
 import 'hook.dart';
 import 'metadata.dart';
@@ -9,9 +11,9 @@ abstract class FeatureProvider {
 
   List<Hook> get providerHooks => [];
 
-  ProviderEvaluation<bool> getBooleanEvaluation(
+  FutureOr<ProviderEvaluation<bool>> getBooleanEvaluation(
     String key,
     bool defaultValue, {
-    EvaluationContext? ctx,
+    EvaluationContext? evaluationContext,
   });
 }

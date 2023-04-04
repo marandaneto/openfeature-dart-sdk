@@ -11,7 +11,7 @@ class FakeStringHook extends StringHook {
 
   @override
   EvaluationContext? before(
-      HookContext<String> ctx, Map<String, Object> hints) {
+      HookContext<String> evaluationContext, Map<String, Object> hints) {
     calledBefore = true;
     return ImmutableContext.fromAttributes(_attributes);
   }

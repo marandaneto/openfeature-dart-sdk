@@ -11,13 +11,13 @@ typedef HookConsumer = void Function(Hook param);
 class HookSupport {
   void errorHooks(
     FlagValueType flagValueType,
-    HookContext hookCtx,
-    Object e,
+    HookContext hookContext,
+    Object error,
     List<Hook> hooks,
     Map<String, Object> hints,
   ) {
     void theHook(Hook hook) {
-      hook.error(hookCtx, e, hints);
+      hook.error(hookContext, error, hints);
     }
 
     _executeHooks(flagValueType, hooks, "error", theHook);
@@ -25,12 +25,12 @@ class HookSupport {
 
   void afterAllHooks(
     FlagValueType flagValueType,
-    HookContext hookCtx,
+    HookContext hookContext,
     List<Hook> hooks,
     Map<String, Object> hints,
   ) {
     void theHook(Hook hook) {
-      hook.finallyAfter(hookCtx, hints);
+      hook.finallyAfter(hookContext, hints);
     }
 
     _executeHooks(flagValueType, hooks, "finally", theHook);
@@ -86,22 +86,21 @@ class HookSupport {
 
   EvaluationContext beforeHooks(
     FlagValueType flagValueType,
-    HookContext hookCtx,
+    HookContext hookContext,
     List<Hook> hooks,
     Map<String, Object> hints,
   ) {
-    final result = callBeforeHooks(flagValueType, hookCtx, hooks, hints);
+    final result = callBeforeHooks(flagValueType, hookContext, hooks, hints);
 
-    // TODO: double check this
     final reduce = result.isNotEmpty
         ? result.reduce((accumulated, current) => accumulated.merge(current))
         : null;
-    return hookCtx.ctx.merge(reduce);
+    return hookContext.evaluationContext.merge(reduce);
   }
 
   List<EvaluationContext> callBeforeHooks(
     FlagValueType flagValueType,
-    HookContext hookCtx,
+    HookContext hookContext,
     List<Hook> hooks,
     Map<String, Object> hints,
   ) {
@@ -109,7 +108,7 @@ class HookSupport {
     final reversedHooks = hooks.reversed.toList();
     return reversedHooks
         .where((element) => element.supportsFlagValueType(flagValueType))
-        .map((hook) => hook.before(hookCtx, hints))
+        .map((hook) => hook.before(hookContext, hints))
         .whereType<EvaluationContext>()
         .toList();
   }

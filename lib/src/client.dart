@@ -9,7 +9,7 @@ abstract class Client extends Features {
 
   EvaluationContext? get evaluationContext;
 
-  set evaluationContext(EvaluationContext? ctx);
+  set evaluationContext(EvaluationContext? evaluationContext);
 
   // Dart does not have varargs
   void addHook(Hook hook);

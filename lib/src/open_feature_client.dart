@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'client.dart';
 import 'error_code.dart';
 import 'evaluation_context.dart';
+import 'exceptions/general_error.dart';
 import 'feature_provider.dart';
 import 'flag_evaluation_details.dart';
 import 'flag_evaluation_options.dart';
@@ -20,35 +22,38 @@ import 'reason.dart';
 
 class OpenFeatureClient implements Client {
   final OpenFeatureAPI _openFeatureApi;
-  final String _name;
   final String? _version;
   final List<Hook> _clientHooks = [];
   EvaluationContext? _evaluationContext;
   final HookSupport _hookSupport = HookSupport();
 
+  final MetadataName _metadata;
+
   OpenFeatureClient(
     this._openFeatureApi,
-    this._name, {
-    String? name,
+    String name, {
     String? version,
-  }) : _version = version;
+  })  : _version = version,
+        _metadata = MetadataName(name);
 
   @override
   void addHook(Hook hook) => _clientHooks.add(hook);
 
   @override
-  bool getBooleanValue(
+  FutureOr<bool> getBooleanValue(
     String key, {
     bool defaultValue = false,
-    EvaluationContext? ctx,
+    EvaluationContext? evaluationContext,
     FlagEvaluationOptions? options,
-  }) =>
-      getBooleanDetails(
-        key,
-        defaultValue: defaultValue,
-        ctx: ctx,
-        options: options,
-      ).value;
+  }) async {
+    final result = await getBooleanDetails(
+      key,
+      defaultValue: defaultValue,
+      evaluationContext: evaluationContext,
+      options: options,
+    );
+    return result.value;
+  }
 
   @override
   EvaluationContext? get evaluationContext => _evaluationContext;
@@ -58,34 +63,35 @@ class OpenFeatureClient implements Client {
   List<Hook> get hooks => _clientHooks;
 
   @override
-  Metadata get metadata => MetadataName(_name);
+  Metadata get metadata => _metadata;
 
   @override
-  set evaluationContext(EvaluationContext? ctx) => _evaluationContext = ctx;
+  set evaluationContext(EvaluationContext? evaluationContext) =>
+      _evaluationContext = evaluationContext;
 
   @override
-  FlagEvaluationDetails<bool> getBooleanDetails(
+  FutureOr<FlagEvaluationDetails<bool>> getBooleanDetails(
     String key, {
     bool defaultValue = false,
-    EvaluationContext? ctx,
+    EvaluationContext? evaluationContext,
     FlagEvaluationOptions? options,
-  }) =>
+  }) async =>
       _evaluateFlag<bool>(
         FlagValueType.boolean,
         key,
         defaultValue,
-        ctx,
+        evaluationContext,
         options,
       );
 
-  FlagEvaluationDetails<T> _evaluateFlag<T>(
+  FutureOr<FlagEvaluationDetails<T>> _evaluateFlag<T>(
     FlagValueType type,
     String key,
     T defaultValue,
-    EvaluationContext? ctx,
+    EvaluationContext? evaluationContext,
     FlagEvaluationOptions? options,
-  ) {
-    final context = ctx ?? ImmutableContext.empty();
+  ) async {
+    final context = evaluationContext ?? ImmutableContext.empty();
     final theOptions = options ?? FlagEvaluationOptions.empty();
     FlagEvaluationDetails<T>? details;
     final provider = _openFeatureApi.provider ?? NoOpProvider();
@@ -117,7 +123,7 @@ class OpenFeatureClient implements Client {
 
       final mergedCtx = apiContext.merge(clientContext.merge(invocationCtx));
 
-      ProviderEvaluation<T> providerEval = _createProviderEvaluation<T>(
+      ProviderEvaluation<T> providerEval = await _createProviderEvaluation<T>(
           type, key, defaultValue, provider, mergedCtx);
 
       details = FlagEvaluationDetails.from<T>(providerEval, key);
@@ -142,7 +148,7 @@ class OpenFeatureClient implements Client {
         // variant: '',
         reason: Reason.error,
         errorCode: ErrorCode.general,
-        // errorMessage: '',
+        errorMessage: e.toString(),
       );
     } finally {
       _hookSupport.afterAllHooks(
@@ -152,20 +158,20 @@ class OpenFeatureClient implements Client {
     return details;
   }
 
-  ProviderEvaluation<T> _createProviderEvaluation<T>(
+  FutureOr<ProviderEvaluation<T>> _createProviderEvaluation<T>(
     FlagValueType type,
     String key,
     T defaultValue,
     FeatureProvider provider,
-    EvaluationContext invocationContext,
-  ) {
+    EvaluationContext evaluationContext,
+  ) async {
     switch (type) {
       case FlagValueType.boolean:
-        return provider.getBooleanEvaluation(key, defaultValue as bool,
-            ctx: invocationContext) as ProviderEvaluation<T>;
+        return await provider.getBooleanEvaluation(key, defaultValue as bool,
+            evaluationContext: evaluationContext) as ProviderEvaluation<T>;
       default:
         // TODO: implement others
-        throw UnimplementedError();
+        throw GeneralError('Unknown flag type');
     }
   }
 }

@@ -3,13 +3,16 @@ import 'hook.dart';
 class FlagEvaluationOptions {
   final List<Hook> _hooks;
 
-  final Map<String, Object> _hookHints = {};
+  final Map<String, Object> _hookHints;
 
-  FlagEvaluationOptions._(this._hooks);
+  FlagEvaluationOptions._(this._hooks, this._hookHints);
 
-  FlagEvaluationOptions.empty() : this._([]);
+  FlagEvaluationOptions.empty() : this._([], {});
 
-  FlagEvaluationOptions.from(List<Hook> hooks) : this._(hooks);
+  FlagEvaluationOptions.fromHooks(List<Hook> hooks) : this._(hooks, {});
+
+  FlagEvaluationOptions.from(List<Hook> hooks, Map<String, Object> hookHints)
+      : this._(hooks, hookHints);
 
   Map<String, Object> get hookHints => Map.unmodifiable(_hookHints);
 

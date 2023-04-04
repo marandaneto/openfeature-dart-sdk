@@ -24,6 +24,9 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
         _reason = reason,
         _variant = variant;
 
+  // maybe not needed?
+  String get key => _flagKey;
+
   @override
   ErrorCode? get errorCode => _errorCode;
 

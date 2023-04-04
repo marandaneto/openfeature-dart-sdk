@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:meta/meta.dart';
+
 import 'value.dart';
 
 typedef StructureMergeFunction = Structure Function(
@@ -51,6 +53,7 @@ abstract class Structure {
     return null;
   }
 
+  @internal
   Map<String, Value> mergeStructures(
     StructureMergeFunction newStructure,
     Map<String, Value> base,
