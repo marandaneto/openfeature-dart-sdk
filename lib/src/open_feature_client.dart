@@ -12,6 +12,7 @@ import 'hook_context.dart';
 import 'hook_support.dart';
 import 'immutable_context.dart';
 import 'metadata.dart';
+import 'metadata_name.dart';
 import 'no_op_provider.dart';
 import 'open_feature_api.dart';
 import 'provider_evaluation.dart';
@@ -57,7 +58,7 @@ class OpenFeatureClient implements Client {
   List<Hook> getHooks() => _clientHooks;
 
   @override
-  Metadata getMetadata() => _Metadata(name: _name);
+  Metadata getMetadata() => MetadataName(name: _name);
 
   @override
   void setEvaluationContext(EvaluationContext ctx) => _evaluationContext = ctx;
@@ -168,13 +169,4 @@ class OpenFeatureClient implements Client {
         throw UnimplementedError();
     }
   }
-}
-
-class _Metadata implements Metadata {
-  final String? _name;
-
-  _Metadata({String? name}) : _name = name;
-
-  @override
-  String? getName() => _name;
 }
