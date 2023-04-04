@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'error_code.dart';
-import 'evaluation_context.dart';
-import 'feature_provider.dart';
-import 'metadata.dart';
-import 'metadata_name.dart';
-import 'provider_evaluation.dart';
+import '../error_code.dart';
+import '../evaluation_context.dart';
+import '../feature_provider.dart';
+import '../metadata.dart';
+import '../metadata_name.dart';
+import '../provider_evaluation.dart';
 
 import 'package:http/http.dart' as http;
 
-import 'reason.dart';
+import '../reason.dart';
 
 // ```json
 // {
@@ -148,6 +148,8 @@ import 'reason.dart';
 // }
 // ```
 
+// TODO: this should be a package
+// This is not finished/tested
 class FlagdProvider extends FeatureProvider {
   static const _name = 'Flagd Provider';
 

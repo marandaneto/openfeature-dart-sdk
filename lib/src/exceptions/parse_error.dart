@@ -1,5 +1,4 @@
-import 'package:openfeature_dart/src/exceptions/open_feature_error.dart';
-
+import '../../openfeature.dart';
 import '../error_code.dart';
 
 class ParseError extends OpenFeatureError {

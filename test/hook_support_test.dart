@@ -1,4 +1,4 @@
-import 'package:openfeature_dart/openfeature.dart';
+import 'package:openfeature/openfeature.dart';
 import 'package:test/test.dart';
 
 import 'fakes.dart';

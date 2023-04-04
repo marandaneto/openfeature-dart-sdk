@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:openfeature_dart/openfeature.dart';
+import 'package:openfeature/openfeature.dart';
 import 'package:test/test.dart';
 
 void main() {

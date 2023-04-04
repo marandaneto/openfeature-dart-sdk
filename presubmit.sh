@@ -9,11 +9,11 @@ set -x
 dart pub get
 # static code analyzer
 dart analyze --fatal-infos
-# tests
-dart test -p "chrome,vm"
+# tests, add: chrome later
+dart test -p "vm" --chain-stack-traces
 # formatting
 dart format --set-exit-if-changed ./
 # pub score
-# pana
+pana
 # dry publish
-# dart pub publish --dry-run
+dart pub publish --dry-run

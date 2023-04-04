@@ -1,5 +1,5 @@
-import 'package:openfeature_dart/src/error_code.dart';
-import 'package:openfeature_dart/src/exceptions/open_feature_error.dart';
+import '../../openfeature.dart';
+import '../error_code.dart';
 
 class GeneralError extends OpenFeatureError {
   GeneralError(super.message);

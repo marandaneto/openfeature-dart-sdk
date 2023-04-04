@@ -37,6 +37,7 @@ class EnvVarProvider extends FeatureProvider {
     final env = Platform.environment[key];
 
     if (env == null) {
+      // TODO: or should we throw with ErrorCode.flagNotFound?
       return ProviderEvaluation(
         defaultValue as T,
         Reason.static,

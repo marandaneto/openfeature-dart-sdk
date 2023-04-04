@@ -1,4 +1,4 @@
-import 'package:openfeature_dart/openfeature.dart';
+import 'package:openfeature/openfeature.dart';
 
 class FakeStringHook extends StringHook {
   final Map<String, Value> _attributes;
