@@ -31,7 +31,7 @@ class Value {
         !isStructure &&
         !isValueList &&
         !isNull) {
-      throw ArgumentError('Invalid value type: $value');
+      throw ArgumentError('Invalid value type: $value.');
     }
   }
 

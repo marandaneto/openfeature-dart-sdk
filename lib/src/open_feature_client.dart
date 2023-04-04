@@ -16,7 +16,7 @@ import 'hook_support.dart';
 import 'immutable_context.dart';
 import 'metadata.dart';
 import 'metadata_name.dart';
-import 'no_op_provider.dart';
+import 'providers/no_op_provider.dart';
 import 'open_feature_api.dart';
 import 'provider_evaluation.dart';
 import 'reason.dart';
@@ -178,7 +178,7 @@ class OpenFeatureClient implements Client {
             evaluationContext: evaluationContext) as ProviderEvaluation<T>;
       default:
         // TODO: implement others
-        throw GeneralError('Unknown flag type');
+        throw GeneralError('Unknown flag type: $type.');
     }
   }
 }

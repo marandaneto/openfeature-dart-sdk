@@ -1,9 +1,9 @@
-import 'evaluation_context.dart';
-import 'feature_provider.dart';
-import 'metadata.dart';
-import 'metadata_name.dart';
-import 'provider_evaluation.dart';
-import 'reason.dart';
+import '../evaluation_context.dart';
+import '../feature_provider.dart';
+import '../metadata.dart';
+import '../metadata_name.dart';
+import '../provider_evaluation.dart';
+import '../reason.dart';
 
 /// A [FeatureProvider] that simply returns the default values passed to it.
 class NoOpProvider extends FeatureProvider {
@@ -23,7 +23,7 @@ class NoOpProvider extends FeatureProvider {
   }) =>
       ProviderEvaluation<bool>(
         defaultValue,
-        _defaultVariant,
         Reason.defaultReason,
+        variant: _defaultVariant,
       );
 }

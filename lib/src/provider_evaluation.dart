@@ -4,19 +4,20 @@ import 'reason.dart';
 
 class ProviderEvaluation<T> implements BaseEvaluation<T> {
   final T _value;
-  final String _variant;
+  final String? _variant;
   final Reason _reason;
   final ErrorCode? _errorCode;
   final String? _errorMessage;
 
   ProviderEvaluation(
     this._value,
-    this._variant,
     this._reason, {
+    String? variant,
     ErrorCode? errorCode,
     String? errorMessage,
   })  : _errorCode = errorCode,
-        _errorMessage = errorMessage;
+        _errorMessage = errorMessage,
+        _variant = variant;
 
   @override
   ErrorCode? get errorCode => _errorCode;
@@ -31,5 +32,5 @@ class ProviderEvaluation<T> implements BaseEvaluation<T> {
   T get value => _value;
 
   @override
-  String get variant => _variant;
+  String? get variant => _variant;
 }

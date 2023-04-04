@@ -7,7 +7,6 @@ export 'src/evaluation_context.dart';
 export 'src/feature_provider.dart';
 export 'src/open_feature_api.dart';
 export 'src/immutable_structure.dart';
-export 'src/no_op_provider.dart';
 export 'src/provider_evaluation.dart';
 export 'src/immutable_context.dart';
 export 'src/hook_context.dart';
@@ -18,3 +17,13 @@ export 'src/flag_evaluation_details.dart';
 export 'src/flag_evaluation_options.dart';
 export 'src/hook_support.dart';
 export 'src/reason.dart';
+export 'src/base_evaluation.dart';
+export 'src/boolean_hook.dart';
+// exceptions
+export 'src/exceptions/general_error.dart';
+export 'src/exceptions/parse_error.dart';
+export 'src/exceptions/open_feature_error.dart';
+export 'src/exceptions/value_not_convertable_error.dart';
+// default providers
+export 'src/providers/env_var_provider.dart';
+export 'src/providers/no_op_provider.dart';

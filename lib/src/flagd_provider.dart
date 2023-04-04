@@ -178,13 +178,12 @@ class FlagdProvider extends FeatureProvider {
 
       return ProviderEvaluation<bool>(
         variant ?? defaultValue,
-        defaultVariant ?? '',
         reason,
+        variant: defaultVariant ?? '',
       );
     } catch (e) {
       return ProviderEvaluation<bool>(
         defaultValue,
-        '',
         Reason.defaultReason,
         errorCode: ErrorCode.flagNotFound,
         errorMessage: e.toString(),
