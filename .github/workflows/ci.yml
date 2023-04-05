@@ -1,0 +1,55 @@
+name: openfeature
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  cancel-previous-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dartv1
+
+      - name: Pub Get
+        run: dart pub get
+
+      - name: Format
+        run: dart format --set-exit-if-changed ./
+
+      - name: Analyze
+        run: dart analyze --fatal-infos
+
+      - name: Build Example (AOT and JS)
+        run: |
+          cd example
+          dart compile aot-snapshot main.dart
+          dart compile js main.dart
+
+      - name: Test VM with Coverage
+        run: dart test -p vm --coverage=coverage --test-randomize-ordering-seed=random --chain-stack-traces
+
+      - name: Test Chrome
+        run: dart test -p chrome --test-randomize-ordering-seed=random --chain-stack-traces
+
+      - name: Format coverage
+        run: dart run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.dart_tool/package_config.json --report-on=lib
+
+      - uses: codecov/codecov-action@v3
+        with:
+          name: openfeature
+          files: ./coverage/lcov.info
+
+      - uses: VeryGoodOpenSource/very_good_coverage@v2
+        with:
+          path: './coverage/lcov.info'
+          min_coverage: 5
