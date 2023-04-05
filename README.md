@@ -7,7 +7,7 @@ final api = OpenFeatureAPI();
 // set your own provider
 api.provider = EnvVarProvider();
 final client = api.getClient('myClient');
-final result = await client.getBooleanValue('myBoolFlag', defaultValue: false);
+final result = await client.getBooleanValue('myBoolFlag', false);
 ```
 
 For complete documentation, visit: https://docs.openfeature.dev/docs/category/concepts

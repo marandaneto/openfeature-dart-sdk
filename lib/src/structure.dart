@@ -43,6 +43,10 @@ abstract class Structure {
       });
     }
 
+    if (value.isDateTime) {
+      return value.asDateTime;
+    }
+
     throw ValueNotConvertableError(
         '${value.asObject} is not convertable to a known type.');
   }

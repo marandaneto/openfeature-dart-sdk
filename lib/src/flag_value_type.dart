@@ -4,5 +4,5 @@ enum FlagValueType {
   number,
   object,
   boolean,
-  datetime,
+  // datetime, // TODO: implement methods for this type
 }

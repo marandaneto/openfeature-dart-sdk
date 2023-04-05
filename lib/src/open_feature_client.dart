@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:openfeature/src/value.dart';
+
 import 'client.dart';
 import 'error_code.dart';
 import 'evaluation_context.dart';
@@ -44,43 +46,12 @@ class OpenFeatureClient implements Client {
   void addHook(Hook hook) => _clientHooks.add(hook);
 
   @override
-  FutureOr<bool> getBooleanValue(
-    String key, {
-    bool defaultValue = false,
-    EvaluationContext? evaluationContext,
-    FlagEvaluationOptions? options,
-  }) async {
-    final result = await getBooleanDetails(
-      key,
-      defaultValue: defaultValue,
-      evaluationContext: evaluationContext,
-      options: options,
-    );
-    return result.value;
-  }
-
-  @override
   List<Hook> get hooks => List.unmodifiable(_clientHooks);
 
   @override
   Metadata get metadata => _metadata;
 
   String? get version => _version;
-
-  @override
-  FutureOr<FlagEvaluationDetails<bool>> getBooleanDetails(
-    String key, {
-    bool defaultValue = false,
-    EvaluationContext? evaluationContext,
-    FlagEvaluationOptions? options,
-  }) async =>
-      _evaluateFlag<bool>(
-        FlagValueType.boolean,
-        key,
-        defaultValue,
-        evaluationContext,
-        options,
-      );
 
   FutureOr<FlagEvaluationDetails<T>> _evaluateFlag<T>(
     FlagValueType type,
@@ -176,9 +147,157 @@ class OpenFeatureClient implements Client {
       case FlagValueType.boolean:
         return await provider.getBooleanEvaluation(key, defaultValue as bool,
             evaluationContext: evaluationContext) as ProviderEvaluation<T>;
+      case FlagValueType.string:
+        return await provider.getStringEvaluation(key, defaultValue as String,
+            evaluationContext: evaluationContext) as ProviderEvaluation<T>;
+      case FlagValueType.number:
+        return await provider.getNumberEvaluation(key, defaultValue as num,
+            evaluationContext: evaluationContext) as ProviderEvaluation<T>;
+      case FlagValueType.object:
+        return await provider.getObjectEvaluation(key, defaultValue as Value,
+            evaluationContext: evaluationContext) as ProviderEvaluation<T>;
       default:
-        // TODO: implement others
         throw GeneralError('Unknown flag type: $type.');
     }
+  }
+
+  @override
+  FutureOr<bool> getBooleanValue(
+    String key,
+    bool defaultValue, {
+    EvaluationContext? evaluationContext,
+    FlagEvaluationOptions? options,
+  }) async {
+    FutureOr<bool> wrapped() async {
+      final result = await getBooleanDetails(
+        key,
+        defaultValue,
+        evaluationContext: evaluationContext,
+        options: options,
+      );
+      return result.value;
+    }
+
+    return wrapped();
+  }
+
+  @override
+  FutureOr<FlagEvaluationDetails<bool>> getBooleanDetails(
+    String key,
+    bool defaultValue, {
+    EvaluationContext? evaluationContext,
+    FlagEvaluationOptions? options,
+  }) =>
+      _evaluateFlag<bool>(
+        FlagValueType.boolean,
+        key,
+        defaultValue,
+        evaluationContext,
+        options,
+      );
+
+  @override
+  FutureOr<FlagEvaluationDetails<num>> getNumberDetails(
+    String key,
+    num defaultValue, {
+    EvaluationContext? evaluationContext,
+    FlagEvaluationOptions? options,
+  }) =>
+      _evaluateFlag<num>(
+        FlagValueType.number,
+        key,
+        defaultValue,
+        evaluationContext,
+        options,
+      );
+
+  @override
+  FutureOr<num> getNumberValue(
+    String key,
+    num defaultValue, {
+    EvaluationContext? evaluationContext,
+    FlagEvaluationOptions? options,
+  }) async {
+    FutureOr<num> wrapped() async {
+      final result = await getNumberDetails(
+        key,
+        defaultValue,
+        evaluationContext: evaluationContext,
+        options: options,
+      );
+      return result.value;
+    }
+
+    return wrapped();
+  }
+
+  @override
+  FutureOr<FlagEvaluationDetails<Value>> getObjectDetails(
+    String key,
+    Value defaultValue, {
+    EvaluationContext? evaluationContext,
+    FlagEvaluationOptions? options,
+  }) =>
+      _evaluateFlag<Value>(
+        FlagValueType.object,
+        key,
+        defaultValue,
+        evaluationContext,
+        options,
+      );
+
+  @override
+  FutureOr<Value> getObjectValue(
+    String key,
+    Value defaultValue, {
+    EvaluationContext? evaluationContext,
+    FlagEvaluationOptions? options,
+  }) async {
+    FutureOr<Value> wrapped() async {
+      final result = await getObjectDetails(
+        key,
+        defaultValue,
+        evaluationContext: evaluationContext,
+        options: options,
+      );
+      return result.value;
+    }
+
+    return wrapped();
+  }
+
+  @override
+  FutureOr<FlagEvaluationDetails<String>> getStringDetails(
+    String key,
+    String defaultValue, {
+    EvaluationContext? evaluationContext,
+    FlagEvaluationOptions? options,
+  }) =>
+      _evaluateFlag<String>(
+        FlagValueType.string,
+        key,
+        defaultValue,
+        evaluationContext,
+        options,
+      );
+
+  @override
+  FutureOr<String> getStringValue(
+    String key,
+    String defaultValue, {
+    EvaluationContext? evaluationContext,
+    FlagEvaluationOptions? options,
+  }) async {
+    FutureOr<String> wrapped() async {
+      final result = await getStringDetails(
+        key,
+        defaultValue,
+        evaluationContext: evaluationContext,
+        options: options,
+      );
+      return result.value;
+    }
+
+    return wrapped();
   }
 }

@@ -23,6 +23,8 @@ class Value {
 
   Value.fromValueList(List<Value> value) : _innerObject = value;
 
+  Value.fromDateTime(DateTime value) : _innerObject = value;
+
   /// can throw [ArgumentError] if the type is not supported.
   Value.fromObject(Object? value) : _innerObject = value {
     if (!isBoolean &&
@@ -30,6 +32,7 @@ class Value {
         !isNumber &&
         !isStructure &&
         !isValueList &&
+        !isDateTime &&
         !isNull) {
       throw ArgumentError('Invalid value type: $value.');
     }
@@ -46,6 +49,8 @@ class Value {
   bool get isStructure => _innerObject is Structure;
 
   bool get isValueList => _innerObject is List<Value>;
+
+  bool get isDateTime => _innerObject is DateTime;
 
   bool get isNull => _innerObject == null;
 
@@ -66,6 +71,13 @@ class Value {
   num? get asNum {
     if (isNumber) {
       return _innerObject as num;
+    }
+    return null;
+  }
+
+  DateTime? get asDateTime {
+    if (isDateTime) {
+      return _innerObject as DateTime;
     }
     return null;
   }
@@ -96,6 +108,11 @@ class Value {
       final copy = asStructure!.asValueMap
           .map((key, value) => MapEntry(key, Value._(value.clone())));
       return Value.fromStructure(ImmutableStructure.fromAttributes(copy));
+    }
+
+    if (isDateTime) {
+      final copy = asDateTime!.copyWith();
+      return Value.fromDateTime(copy);
     }
 
     return Value._(asObject);

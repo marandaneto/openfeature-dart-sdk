@@ -7,6 +7,7 @@ import '../metadata.dart';
 import '../metadata_name.dart';
 import '../provider_evaluation.dart';
 import '../reason.dart';
+import '../value.dart';
 
 typedef ParseFunction<T> = T Function(String);
 
@@ -31,7 +32,7 @@ class EnvVarProvider extends FeatureProvider {
   /// can throw [ParseError] if the value is not a valid boolean.
   ProviderEvaluation<T> _evaluateEnvironmentVariable<T>(
     String key,
-    bool defaultValue,
+    T defaultValue,
     ParseFunction parser,
   ) {
     final env = Platform.environment[key];
@@ -39,7 +40,7 @@ class EnvVarProvider extends FeatureProvider {
     if (env == null) {
       // TODO: or should we throw with ErrorCode.flagNotFound?
       return ProviderEvaluation(
-        defaultValue as T,
+        defaultValue,
         Reason.static,
         variant: _defaultVariant,
       );
@@ -64,4 +65,30 @@ class EnvVarProvider extends FeatureProvider {
       throw FormatException('$value cannot be parsed as a boolean.');
     }
   }
+
+  @override
+  ProviderEvaluation<num> getNumberEvaluation(
+    String key,
+    num defaultValue, {
+    EvaluationContext? evaluationContext,
+  }) =>
+      _evaluateEnvironmentVariable<num>(
+          key, defaultValue, (value) => num.parse(value));
+
+  @override
+  ProviderEvaluation<Value> getObjectEvaluation(
+    String key,
+    Value defaultValue, {
+    EvaluationContext? evaluationContext,
+  }) =>
+      _evaluateEnvironmentVariable<Value>(
+          key, defaultValue, (value) => Value.fromObject(value));
+
+  @override
+  ProviderEvaluation<String> getStringEvaluation(
+    String key,
+    String defaultValue, {
+    EvaluationContext? evaluationContext,
+  }) =>
+      _evaluateEnvironmentVariable<String>(key, defaultValue, (value) => value);
 }

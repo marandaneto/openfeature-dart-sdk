@@ -4,6 +4,7 @@ import 'evaluation_context.dart';
 import 'hook.dart';
 import 'metadata.dart';
 import 'provider_evaluation.dart';
+import 'value.dart';
 
 /// The interface implemented by upstream flag providers to resolve flags for their service.
 abstract class FeatureProvider {
@@ -16,6 +17,24 @@ abstract class FeatureProvider {
   FutureOr<ProviderEvaluation<bool>> getBooleanEvaluation(
     String key,
     bool defaultValue, {
+    EvaluationContext? evaluationContext,
+  });
+
+  FutureOr<ProviderEvaluation<String>> getStringEvaluation(
+    String key,
+    String defaultValue, {
+    EvaluationContext? evaluationContext,
+  });
+
+  FutureOr<ProviderEvaluation<num>> getNumberEvaluation(
+    String key,
+    num defaultValue, {
+    EvaluationContext? evaluationContext,
+  });
+
+  FutureOr<ProviderEvaluation<Value>> getObjectEvaluation(
+    String key,
+    Value defaultValue, {
     EvaluationContext? evaluationContext,
   });
 

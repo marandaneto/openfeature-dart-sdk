@@ -1,4 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
+
+import 'package:openfeature/src/value.dart';
 
 import '../error_code.dart';
 import '../evaluation_context.dart';
@@ -195,4 +198,34 @@ class FlagdProvider extends FeatureProvider {
 
   @override
   Metadata get metadata => _metadata;
+
+  @override
+  Future<ProviderEvaluation<num>> getNumberEvaluation(
+    String key,
+    num defaultValue, {
+    EvaluationContext? evaluationContext,
+  }) {
+    // TODO: implement getNumberEvaluation
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ProviderEvaluation<Value>> getObjectEvaluation(
+    String key,
+    Value defaultValue, {
+    EvaluationContext? evaluationContext,
+  }) {
+    // TODO: implement getObjectEvaluation
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ProviderEvaluation<String>> getStringEvaluation(
+    String key,
+    String defaultValue, {
+    EvaluationContext? evaluationContext,
+  }) {
+    // TODO: implement getStringEvaluation
+    throw UnimplementedError();
+  }
 }
