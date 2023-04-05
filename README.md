@@ -1,8 +1,6 @@
 # OpenFeature SDK for Dart
 
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-
-[![codecov](https://codecov.io/gh/marandaneto/openfeature-dart-sdk/branch/main/graph/badge.svg)](https://codecov.io/gh/marandaneto/openfeature-dart-sdk)
+[![codecov](https://codecov.io/gh/marandaneto/openfeature-dart-sdk/branch/main/graph/badge.svg)](https://codecov.io/gh/marandaneto/openfeature-dart-sdk) | [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 
 | package | build | pub | likes | popularity | pub points |
 | ------- | ------- | ------- | ------- | ------- | ------- |
@@ -31,4 +29,4 @@ final client = api.getClient('myClient');
 final result = await client.getBooleanValue('myBoolFlag', false);
 ```
 
-For complete documentation, visit: https://docs.openfeature.dev/docs/category/concepts
+For complete documentation, visit: https://docs.openfeature.dev/docs/reference/intro
