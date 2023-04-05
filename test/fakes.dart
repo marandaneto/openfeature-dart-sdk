@@ -34,3 +34,9 @@ class FakeStringHook extends StringHook {
 }
 
 class FakeBooleanHook extends BooleanHook {}
+
+class FakeNumberHook extends NumberHook {}
+
+class MyHook extends Hook<String> {}
+
+class FakeNonValue {}

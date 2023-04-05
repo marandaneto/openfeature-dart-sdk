@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import 'client.dart';
 import 'evaluation_context.dart';
 import 'feature_provider.dart';
@@ -33,4 +35,11 @@ class OpenFeatureAPI {
   void clearHooks() => _apiHooks.clear();
 
   void addHook(Hook hook) => _apiHooks.add(hook);
+
+  @visibleForTesting
+  void reset() {
+    clearHooks();
+    evaluationContext = null;
+    provider = null;
+  }
 }

@@ -1,6 +1,8 @@
 import 'package:openfeature/openfeature.dart';
 import 'package:test/test.dart';
 
+import 'fakes.dart';
+
 void main() {
   final hook = MyHook();
   final attributes = {
@@ -31,5 +33,3 @@ void main() {
     hook.finallyAfter(hookCtx, {});
   });
 }
-
-class MyHook extends Hook<String> {}

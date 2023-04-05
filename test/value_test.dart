@@ -1,6 +1,8 @@
 import 'package:openfeature/openfeature.dart';
 import 'package:test/test.dart';
 
+import 'fakes.dart';
+
 void main() {
   test('no arg should contain null', () {
     expect(Value.empty().isNull, true);
@@ -9,7 +11,8 @@ void main() {
   });
 
   test('invalid arg should throw', () {
-    expect(() => Value.fromObject(_Something()), throwsA(isA<ArgumentError>()));
+    expect(
+        () => Value.fromObject(FakeNonValue()), throwsA(isA<ArgumentError>()));
   });
 
   test('invalid list arg should throw', () {
@@ -87,5 +90,3 @@ void main() {
     expect(value.asDateTime, dateTime);
   });
 }
-
-class _Something {}

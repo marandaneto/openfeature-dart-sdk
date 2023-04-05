@@ -91,7 +91,7 @@ class OpenFeatureClient implements Client {
       final apiContext =
           _openFeatureApi.evaluationContext ?? ImmutableContext.empty();
 
-      final clientContext = evaluationContext ?? ImmutableContext.empty();
+      final clientContext = this.evaluationContext ?? ImmutableContext.empty();
 
       final ctxFromHook = _hookSupport.beforeHooks(
           type, hookCtx, mergedHooks, theOptions.hookHints);
