@@ -81,17 +81,16 @@ void main() {
     final merged = ctx.merge(overridingCtx);
 
     expect(merged.targetingKey, 'targeting_key');
-    // list is reversed, is that a bug?
     expect(
-        ListEquality().equals(merged.keySet.toList(), ['key2', 'key1']), true);
+        DeepCollectionEquality().equals(merged.keySet, {'key2', 'key1'}), true);
 
     final key1 = merged.getValue('key1');
     expect(key1?.isStructure, true);
 
     final value = key1?.asStructure;
     expect(
-        ListEquality()
-            .equals(value?.keySet.toList(), ['overriding_key1_1', 'key1_1']),
+        DeepCollectionEquality()
+            .equals(value?.keySet, {'overriding_key1_1', 'key1_1'}),
         true);
   });
 
@@ -112,12 +111,12 @@ void main() {
     final merged = ctx.merge(overridingCtx);
 
     expect(
-        ListEquality().equals(merged.keySet.toList(), ['key2', 'key1']), true);
+        DeepCollectionEquality().equals(merged.keySet, {'key2', 'key1'}), true);
 
     final key1 = merged.getValue('key1');
     expect(key1?.isStructure, true);
 
     final value = key1?.asStructure;
-    expect(ListEquality().equals(value?.keySet.toList(), ['key1_1']), true);
+    expect(DeepCollectionEquality().equals(value?.keySet, {'key1_1'}), true);
   });
 }
