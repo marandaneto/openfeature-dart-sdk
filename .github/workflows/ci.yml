@@ -46,10 +46,11 @@ jobs:
 
       - uses: codecov/codecov-action@v3
         with:
-          name: openfeature
+          fail_ci_if_error: true
+          verbose: true
           files: ./coverage/lcov.info
 
       - uses: VeryGoodOpenSource/very_good_coverage@v2
         with:
           path: './coverage/lcov.info'
-          min_coverage: 5
+          min_coverage: 40
