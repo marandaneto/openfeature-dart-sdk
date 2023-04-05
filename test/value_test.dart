@@ -22,7 +22,8 @@ void main() {
       'val',
       .5,
       ImmutableStructure.empty(),
-      List<Value>.empty()
+      List<Value>.empty(),
+      DateTime.now(),
     ];
 
     for (final item in list) {
@@ -76,6 +77,14 @@ void main() {
     expect(value.isValueList, true);
     expect(value.asValueList, list);
     expect(value.asValueList?.first.asString, 'value');
+  });
+
+  test('datetime object should contain datetime', () {
+    final dateTime = DateTime.now();
+    final value = Value.fromObject(dateTime);
+
+    expect(value.isDateTime, true);
+    expect(value.asDateTime, dateTime);
   });
 }
 

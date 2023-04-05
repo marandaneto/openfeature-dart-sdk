@@ -5,7 +5,7 @@ repository: https://github.com/open-feature
 homepage: https://openfeature.dev/
 issue_tracker: https://github.com/open-feature
 documentation: https://openfeature.dev/
-publish_to: none
+#publish_to: none
 
 environment:
   sdk: '>=2.19.0 <4.0.0'

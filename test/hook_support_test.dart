@@ -6,6 +6,7 @@ import 'fakes.dart';
 void main() {
   const key = 'baseKey';
   const keyValue = 'baseValue';
+  final hookSupport = HookSupport();
 
   test('should merge evaluation context on before hooks', () {
     final attributes = {
@@ -25,7 +26,6 @@ void main() {
     final fake2 = FakeStringHook({'foo': Value.fromObject('bar')});
     final hooks = [fake1, fake2];
 
-    final hookSupport = HookSupport();
     final result =
         hookSupport.beforeHooks(FlagValueType.string, hookCtx, hooks, {});
 
@@ -36,7 +36,6 @@ void main() {
 
   test('should always call generic hook', () {
     final fakeHook = FakeStringHook({});
-    final hookSupport = HookSupport();
     final baseCtx = ImmutableContext.empty();
 
     final ex = ArgumentError('error');
@@ -51,8 +50,14 @@ void main() {
     final hooks = [fakeHook];
 
     hookSupport.beforeHooks(FlagValueType.string, hookCtx, hooks, {});
+
+    final eval = ProviderEvaluation<String>(
+      'defaultValue',
+      Reason.static,
+    );
+
     hookSupport.afterHooks(FlagValueType.string, hookCtx,
-        FlagEvaluationDetails<String>('flagKey', 'defaultValue'), hooks, {});
+        FlagEvaluationDetails.from<String>(eval, 'defaultValue'), hooks, {});
     hookSupport.afterAllHooks(FlagValueType.string, hookCtx, hooks, {});
     hookSupport.errorHooks(FlagValueType.string, hookCtx, ex, hooks, {});
 

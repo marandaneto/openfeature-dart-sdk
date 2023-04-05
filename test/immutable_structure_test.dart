@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:openfeature/openfeature.dart';
 import 'package:test/test.dart';
 
@@ -19,6 +20,7 @@ void main() {
 
     expect(structure.asValueMap[key]?.asString, keyValue);
     expect(identical(structure.asValueMap, map), false);
+    expect(DeepCollectionEquality().equals(structure.asValueMap, map), false);
   });
 
   test('mutating get value should not change original value', () {
@@ -34,6 +36,7 @@ void main() {
 
     expect(structure.getValue(key)?.asValueList?.length, 1);
     expect(identical(structure.asValueMap, map), false);
+    expect(DeepCollectionEquality().equals(structure.asValueMap, map), false);
   });
 
   test(
@@ -56,5 +59,18 @@ void main() {
     final structure = ImmutableStructure.empty();
 
     expect(structure.getValue('missing'), isNull);
+  });
+
+  test('structure returns object map', () {
+    final map = {
+      'key': Value.fromObject('value'),
+    };
+    final structure = ImmutableStructure.fromAttributes(map);
+
+    expect(identical(structure.asObjectMap, map), false);
+    expect(
+        DeepCollectionEquality()
+            .equals(structure.asObjectMap, {'key': 'value'}),
+        true);
   });
 }

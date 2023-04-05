@@ -6,7 +6,7 @@ void main() {
   const key = 'key';
   const keyValue = 'value';
 
-  test('should create copy of attributes', () {
+  test('should create copy of value attributes', () {
     final map = {
       key: Value.fromObject(keyValue),
     };
@@ -14,6 +14,7 @@ void main() {
     map['key2'] = Value.fromObject('value2');
 
     expect(identical(ctx.asValueMap, map), false);
+    expect(DeepCollectionEquality().equals(ctx.asValueMap, map), false);
   });
 
   test('should change targeting key from overriding context', () {

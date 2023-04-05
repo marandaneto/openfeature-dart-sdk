@@ -12,7 +12,7 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
   final ErrorCode? _errorCode;
   final String? _errorMessage;
 
-  FlagEvaluationDetails(
+  FlagEvaluationDetails._(
     this._flagKey,
     this._value, {
     String? variant,
@@ -24,7 +24,6 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
         _reason = reason,
         _variant = variant;
 
-  // maybe not needed?
   String get key => _flagKey;
 
   @override
@@ -46,7 +45,7 @@ class FlagEvaluationDetails<T> extends BaseEvaluation<T> {
     ProviderEvaluation<T> providerEval,
     String flagKey,
   ) =>
-      FlagEvaluationDetails<T>(
+      FlagEvaluationDetails<T>._(
         flagKey,
         providerEval.value,
         variant: providerEval.variant,

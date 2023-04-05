@@ -12,18 +12,18 @@ class ImmutableContext extends EvaluationContext {
   final String _targetingKey;
   final Structure _structure;
 
-  ImmutableContext(this._targetingKey, this._structure);
+  ImmutableContext._(this._targetingKey, this._structure);
 
   ImmutableContext.from(String targetingKey, Map<String, Value> attributes)
-      : this(targetingKey, ImmutableStructure.fromAttributes(attributes));
+      : this._(targetingKey, ImmutableStructure.fromAttributes(attributes));
 
   ImmutableContext.fromAttributes(Map<String, Value> attributes)
-      : this('', ImmutableStructure.fromAttributes(attributes));
+      : this._('', ImmutableStructure.fromAttributes(attributes));
 
   ImmutableContext.fromTargetingKey(String targetingKey)
-      : this(targetingKey, ImmutableStructure.empty());
+      : this._(targetingKey, ImmutableStructure.empty());
 
-  ImmutableContext.empty() : this('', ImmutableStructure.empty());
+  ImmutableContext.empty() : this._('', ImmutableStructure.empty());
 
   @override
   String get targetingKey => _targetingKey;

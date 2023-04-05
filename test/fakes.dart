@@ -32,3 +32,5 @@ class FakeStringHook extends StringHook {
     calledFinallyAfter = true;
   }
 }
+
+class FakeBooleanHook extends BooleanHook {}

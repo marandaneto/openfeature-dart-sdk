@@ -117,13 +117,13 @@ class OpenFeatureClient implements Client {
       final errorCode =
           (error is OpenFeatureError) ? error.errorCode : ErrorCode.general;
 
-      details = FlagEvaluationDetails<T>(
-        key,
+      final eval = ProviderEvaluation<T>(
         defaultValue,
-        reason: Reason.error,
+        Reason.error,
         errorCode: errorCode,
         errorMessage: error.toString(),
       );
+      details = FlagEvaluationDetails.from<T>(eval, key);
 
       _hookSupport.errorHooks(
           type, hookCtx, error, mergedHooks, theOptions.hookHints);

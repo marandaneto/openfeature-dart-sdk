@@ -39,7 +39,7 @@ class EnvVarProvider extends FeatureProvider {
 
     if (env == null) {
       // returns default value if the environment variable is not set.
-      return ProviderEvaluation(
+      return ProviderEvaluation<T>(
         defaultValue,
         Reason.static,
         variant: _defaultVariant,
@@ -47,7 +47,7 @@ class EnvVarProvider extends FeatureProvider {
     }
 
     try {
-      return ProviderEvaluation(
+      return ProviderEvaluation<T>(
         parser(env),
         Reason.static,
       );
