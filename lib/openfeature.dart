@@ -13,14 +13,19 @@ export 'src/immutable_context.dart';
 export 'src/hook_context.dart';
 export 'src/flag_value_type.dart';
 export 'src/metadata_name.dart';
-export 'src/string_hook.dart';
 export 'src/flag_evaluation_details.dart';
 export 'src/flag_evaluation_options.dart';
 export 'src/hook_support.dart';
 export 'src/reason.dart';
 export 'src/base_evaluation.dart';
-export 'src/boolean_hook.dart';
 export 'src/error_code.dart';
+export 'src/hook.dart';
+export 'src/open_feature_client.dart';
+
+// hooks
+export 'src/number_hook.dart';
+export 'src/string_hook.dart';
+export 'src/boolean_hook.dart';
 
 // exceptions
 export 'src/exceptions/general_error.dart';
