@@ -3,6 +3,8 @@ Dart implementation of [OpenFeature](https://openfeature.dev), a vendor-agnostic
 This is pretty much experimental and under development as a hobby project.
 
 ```dart
+import 'package:openfeature/openfeature.dart';
+
 final api = OpenFeatureAPI();
 // set your own provider
 api.provider = EnvVarProvider();

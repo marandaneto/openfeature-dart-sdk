@@ -19,6 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '2.19.0' # ensure min version compat.
 
       - name: Pub Get
         run: dart pub get
@@ -47,7 +49,6 @@ jobs:
       - uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: true
-          verbose: true
           files: ./coverage/lcov.info
 
       - uses: VeryGoodOpenSource/very_good_coverage@v2
