@@ -1,3 +1,5 @@
+Superseded by [open-feature/dart-server-sdk](https://github.com/open-feature/dart-server-sdk)
+
 # OpenFeature SDK for Dart
 
 [![codecov](https://codecov.io/gh/marandaneto/openfeature-dart-sdk/branch/main/graph/badge.svg)](https://codecov.io/gh/marandaneto/openfeature-dart-sdk)  [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
